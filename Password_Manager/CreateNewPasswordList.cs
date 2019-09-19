@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Dapper;
 
 namespace Password_Manager
 {
@@ -64,19 +67,29 @@ namespace Password_Manager
                 return;
             }
 
+            string vaultName = txtListName.Text + ".db";
+
+            // Create any directories we need to create and check whether a database with the provided name already exists.
+            Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\Vault\\");
+            if (File.Exists(Path.GetDirectoryName(Application.ExecutablePath) + $"\\Vault\\{vaultName}"))
+            {
+                MessageBox.Show($"Error: Unable to create a password vault with name: \"{txtListName.Text}\"\n\n\"Password Vault \"{vaultName}\" already exists.", "YourPass - Password List Creation Failure", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
             // Create Password Database
+            SQLiteConnection.CreateFile(Path.GetDirectoryName(Application.ExecutablePath) + $"\\Vault\\{vaultName}");
+            Program.CurrentConnectionString = $"DataSource=.\\Vault\\{vaultName};Version=3;";
+            string ciphertext = Crypto.SimpleEncryptWithPassword("correct_password", txtboxMasterPassword.Text);
+            using (IDbConnection connection = new SQLiteConnection(Program.CurrentConnectionString))
+            {
+                connection.Execute("CREATE TABLE \"PasswordVault\" (\"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, \"service_name\"	TEXT NOT NULL, \"encrypted_password\" TEXT NOT NULL);");
+                connection.Execute($"INSERT INTO PasswordVault (service_name, encrypted_password) VALUES ('checksum', '{ciphertext}');");
+            }
 
-            // Add Connection String to App.Config?
-            //AddConnectionString(txtListName.Text + ".db");
-        }
-
-        private void AddConnectionString(string nameOfDBFile)
-        {
-            var settings = ConfigurationManager.ConnectionStrings[ 0 ];
-            var fi = typeof( ConfigurationElement ).GetField( "_bReadOnly", BindingFlags.Instance | BindingFlags.NonPublic );
-            fi.SetValue(settings, false);
-
-            settings.ConnectionString = $@"Data Source=.\{nameOfDBFile};Version=3;";
+            MessageBox.Show($"Success! The password vault \"{vaultName}\" has been created in:\n\n{Path.GetDirectoryName(Application.ExecutablePath) + $"\\Vault\\{vaultName}"}", "YourPass - Success", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            Close();
+            loginForm.Show();
         }
 
         private bool StringContains(string stringToCheck, char[] listOfChars)
@@ -104,7 +117,7 @@ namespace Password_Manager
             if (pass.Length >= 0 && pass.Length < 12)
             {
                 lblPassStrength.ForeColor = Color.DimGray;
-                lblPassStrength.Text = "Password Strength: ---";
+                lblPassStrength.Text = "Password must be at least 12 characters long.";
                 return;
             }
 

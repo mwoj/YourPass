@@ -39,9 +39,11 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlDragbar = new System.Windows.Forms.Panel();
+            this.passwordVaultWatcher = new System.IO.FileSystemWatcher();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.pnlDragbar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.passwordVaultWatcher)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -54,6 +56,7 @@
             this.btnLogin.TabIndex = 2;
             this.btnLogin.Text = "Access Password Bank";
             this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // txtboxMasterPass
             // 
@@ -63,6 +66,7 @@
             this.txtboxMasterPass.Name = "txtboxMasterPass";
             this.txtboxMasterPass.Size = new System.Drawing.Size(440, 20);
             this.txtboxMasterPass.TabIndex = 1;
+            this.txtboxMasterPass.UseSystemPasswordChar = true;
             // 
             // lblWelcome
             // 
@@ -164,6 +168,12 @@
             this.pnlDragbar.Size = new System.Drawing.Size(485, 49);
             this.pnlDragbar.TabIndex = 9;
             // 
+            // passwordVaultWatcher
+            // 
+            this.passwordVaultWatcher.EnableRaisingEvents = true;
+            this.passwordVaultWatcher.SynchronizingObject = this;
+            this.passwordVaultWatcher.Created += new System.IO.FileSystemEventHandler(this.PasswordVaultWatcher_Created);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -186,6 +196,7 @@
             this.groupBox2.PerformLayout();
             this.pnlDragbar.ResumeLayout(false);
             this.pnlDragbar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.passwordVaultWatcher)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -203,5 +214,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel pnlDragbar;
+        private System.IO.FileSystemWatcher passwordVaultWatcher;
     }
 }

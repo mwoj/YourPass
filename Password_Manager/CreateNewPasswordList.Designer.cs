@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblPassStrength = new System.Windows.Forms.Label();
             this.chkboxReveal = new System.Windows.Forms.CheckBox();
             this.txtboxMasterPassword = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnCreate = new System.Windows.Forms.Button();
             this.tmrReveal = new System.Windows.Forms.Timer(this.components);
-            this.lblPassStrength = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -93,6 +93,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Password List Parameters";
+            // 
+            // lblPassStrength
+            // 
+            this.lblPassStrength.AutoSize = true;
+            this.lblPassStrength.ForeColor = System.Drawing.Color.DimGray;
+            this.lblPassStrength.Location = new System.Drawing.Point(6, 116);
+            this.lblPassStrength.Name = "lblPassStrength";
+            this.lblPassStrength.Size = new System.Drawing.Size(224, 13);
+            this.lblPassStrength.TabIndex = 5;
+            this.lblPassStrength.Text = "Password must be at least 12 characters long.";
             // 
             // chkboxReveal
             // 
@@ -158,16 +168,6 @@
             // 
             this.tmrReveal.Interval = 1000;
             this.tmrReveal.Tick += new System.EventHandler(this.TmrReveal_Tick);
-            // 
-            // lblPassStrength
-            // 
-            this.lblPassStrength.AutoSize = true;
-            this.lblPassStrength.ForeColor = System.Drawing.Color.DimGray;
-            this.lblPassStrength.Location = new System.Drawing.Point(6, 116);
-            this.lblPassStrength.Name = "lblPassStrength";
-            this.lblPassStrength.Size = new System.Drawing.Size(111, 13);
-            this.lblPassStrength.TabIndex = 5;
-            this.lblPassStrength.Text = "Password Strength: ---";
             // 
             // CreateNewPasswordList
             // 
