@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,18 +17,20 @@ using Dapper;
 
 namespace Password_Manager
 {
-    public partial class CreateNewPasswordList : Form
+    public partial class CreateNewPasswordList : Form, IMessageFilter
     {
         private readonly Form loginForm;
         public CreateNewPasswordList()
         {
             InitializeComponent();
+            Application.AddMessageFilter(this);
         }
 
         public CreateNewPasswordList(Form loginForm)
         {
             InitializeComponent();
             this.loginForm = loginForm;
+            Application.AddMessageFilter(this);
         }
 
         private void ChkboxReveal_CheckedChanged(object sender, EventArgs e)
@@ -83,8 +86,12 @@ namespace Password_Manager
             string ciphertext = Crypto.SimpleEncryptWithPassword("correct_password", txtboxMasterPassword.Text);
             using (IDbConnection connection = new SQLiteConnection(Program.CurrentConnectionString))
             {
-                connection.Execute("CREATE TABLE \"PasswordVault\" (\"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, \"service_name\"	TEXT NOT NULL, \"encrypted_password\" TEXT NOT NULL);");
-                connection.Execute($"INSERT INTO PasswordVault (service_name, encrypted_password) VALUES ('checksum', '{ciphertext}');");
+                string tableSQL = "CREATE TABLE \"PasswordVault\" (\"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, \"service_name\" TEXT NOT NULL, \"email\" TEXT, \"username\" TEXT, \"encrypted_password\" TEXT NOT NULL);";
+                string checksumSQL =
+                    $"INSERT INTO PasswordVault (service_name, email, username, encrypted_password) VALUES ('checksum', null, null, '{ciphertext}');";
+                
+                connection.Execute(tableSQL);
+                connection.Execute(checksumSQL);
             }
 
             MessageBox.Show($"Success! The password vault \"{vaultName}\" has been created in:\n\n{Path.GetDirectoryName(Application.ExecutablePath) + $"\\Vault\\{vaultName}"}", "YourPass - Success", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
@@ -102,6 +109,8 @@ namespace Password_Manager
 
         private void TxtboxMasterPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == (char)Keys.Enter)
+                btnCreate.PerformClick();
             CalculatePasswordStrength();
         }
 
@@ -121,9 +130,9 @@ namespace Password_Manager
                 return;
             }
 
-            if (pass.Length >= 12 && pass.Length < 16)
+            if (pass.Length >= 12 && pass.Length < 15)
                 passwordStrength += 1;
-            else if (pass.Length >= 16 && pass.Length < 32)
+            else if (pass.Length >= 15 && pass.Length < 32)
                 passwordStrength += 2;
             else if (pass.Length >= 32)
                 passwordStrength += 3;
@@ -157,5 +166,20 @@ namespace Password_Manager
                 lblPassStrength.Text = "Password Strength: Strong";
             }
         }
+
+        public bool PreFilterMessage(ref Message m)
+        {
+            if (m.Msg == Program.WM_LBUTTONDOWN && (FromHandle(m.HWnd) == pnlDragbar || FromHandle(m.HWnd) == lblTitle))
+            {
+                ReleaseCapture();
+                SendMessage(Handle, Program.WM_NCLBUTTONDOWN, Program.HT_CAPTION, 0);
+                return true;
+            }
+            return false;
+        }
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
     }
 }

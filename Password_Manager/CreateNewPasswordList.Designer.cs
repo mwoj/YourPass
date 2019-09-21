@@ -29,50 +29,55 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.pnlDragbar = new System.Windows.Forms.Panel();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pnlUnderPasswordName = new System.Windows.Forms.Panel();
+            this.txtListName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.lblPassStrength = new System.Windows.Forms.Label();
             this.chkboxReveal = new System.Windows.Forms.CheckBox();
             this.txtboxMasterPassword = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtListName = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnCreate = new System.Windows.Forms.Button();
             this.tmrReveal = new System.Windows.Forms.Timer(this.components);
-            this.panel1.SuspendLayout();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.pnlDragbar.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // pnlDragbar
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlDragbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.btnExit);
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(488, 47);
-            this.panel1.TabIndex = 0;
+            this.pnlDragbar.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlDragbar.Controls.Add(this.lblTitle);
+            this.pnlDragbar.Controls.Add(this.btnExit);
+            this.pnlDragbar.Location = new System.Drawing.Point(0, 0);
+            this.pnlDragbar.Name = "pnlDragbar";
+            this.pnlDragbar.Size = new System.Drawing.Size(488, 48);
+            this.pnlDragbar.TabIndex = 0;
             // 
-            // label1
+            // lblTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Myanmar Text", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(286, 37);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Create a New Password List";
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Myanmar Text", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(8, 10);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(286, 37);
+            this.lblTitle.TabIndex = 1;
+            this.lblTitle.Text = "Create a New Password List";
             // 
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.Location = new System.Drawing.Point(451, 13);
+            this.btnExit.Location = new System.Drawing.Point(452, 12);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(24, 24);
             this.btnExit.TabIndex = 0;
+            this.btnExit.TabStop = false;
             this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
@@ -81,66 +86,33 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.lblPassStrength);
-            this.groupBox1.Controls.Add(this.chkboxReveal);
-            this.groupBox1.Controls.Add(this.txtboxMasterPassword);
-            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.pnlUnderPasswordName);
             this.groupBox1.Controls.Add(this.txtListName);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(12, 53);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(463, 188);
+            this.groupBox1.Size = new System.Drawing.Size(463, 84);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Password List Parameters";
             // 
-            // lblPassStrength
+            // pnlUnderPasswordName
             // 
-            this.lblPassStrength.AutoSize = true;
-            this.lblPassStrength.ForeColor = System.Drawing.Color.DimGray;
-            this.lblPassStrength.Location = new System.Drawing.Point(6, 116);
-            this.lblPassStrength.Name = "lblPassStrength";
-            this.lblPassStrength.Size = new System.Drawing.Size(224, 13);
-            this.lblPassStrength.TabIndex = 5;
-            this.lblPassStrength.Text = "Password must be at least 12 characters long.";
-            // 
-            // chkboxReveal
-            // 
-            this.chkboxReveal.AutoSize = true;
-            this.chkboxReveal.Location = new System.Drawing.Point(9, 158);
-            this.chkboxReveal.Name = "chkboxReveal";
-            this.chkboxReveal.Size = new System.Drawing.Size(144, 17);
-            this.chkboxReveal.TabIndex = 4;
-            this.chkboxReveal.Text = "Reveal Master Password";
-            this.chkboxReveal.UseVisualStyleBackColor = true;
-            this.chkboxReveal.CheckedChanged += new System.EventHandler(this.ChkboxReveal_CheckedChanged);
-            // 
-            // txtboxMasterPassword
-            // 
-            this.txtboxMasterPassword.Location = new System.Drawing.Point(9, 132);
-            this.txtboxMasterPassword.Name = "txtboxMasterPassword";
-            this.txtboxMasterPassword.Size = new System.Drawing.Size(448, 20);
-            this.txtboxMasterPassword.TabIndex = 3;
-            this.txtboxMasterPassword.UseSystemPasswordChar = true;
-            this.txtboxMasterPassword.TextChanged += new System.EventHandler(this.TxtboxMasterPassword_TextChanged);
-            this.txtboxMasterPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtboxMasterPassword_KeyPress);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 94);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(391, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Master Password (MAKE SURE YOU WRITE THIS DOWN OR REMEMBER IT):";
+            this.pnlUnderPasswordName.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.pnlUnderPasswordName.Location = new System.Drawing.Point(9, 70);
+            this.pnlUnderPasswordName.Name = "pnlUnderPasswordName";
+            this.pnlUnderPasswordName.Size = new System.Drawing.Size(448, 1);
+            this.pnlUnderPasswordName.TabIndex = 2;
             // 
             // txtListName
             // 
             this.txtListName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtListName.Location = new System.Drawing.Point(9, 47);
+            this.txtListName.BackColor = System.Drawing.SystemColors.Control;
+            this.txtListName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtListName.Location = new System.Drawing.Point(9, 53);
             this.txtListName.Name = "txtListName";
-            this.txtListName.Size = new System.Drawing.Size(448, 20);
+            this.txtListName.Size = new System.Drawing.Size(448, 13);
             this.txtListName.TabIndex = 1;
             // 
             // label2
@@ -152,14 +124,48 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Password List Name:";
             // 
+            // lblPassStrength
+            // 
+            this.lblPassStrength.AutoSize = true;
+            this.lblPassStrength.ForeColor = System.Drawing.Color.DimGray;
+            this.lblPassStrength.Location = new System.Drawing.Point(6, 48);
+            this.lblPassStrength.Name = "lblPassStrength";
+            this.lblPassStrength.Size = new System.Drawing.Size(224, 13);
+            this.lblPassStrength.TabIndex = 5;
+            this.lblPassStrength.Text = "Password must be at least 12 characters long.";
+            // 
+            // chkboxReveal
+            // 
+            this.chkboxReveal.AutoSize = true;
+            this.chkboxReveal.Location = new System.Drawing.Point(313, 48);
+            this.chkboxReveal.Name = "chkboxReveal";
+            this.chkboxReveal.Size = new System.Drawing.Size(144, 17);
+            this.chkboxReveal.TabIndex = 6;
+            this.chkboxReveal.TabStop = false;
+            this.chkboxReveal.Text = "Reveal Master Password";
+            this.chkboxReveal.UseVisualStyleBackColor = true;
+            this.chkboxReveal.CheckedChanged += new System.EventHandler(this.ChkboxReveal_CheckedChanged);
+            // 
+            // txtboxMasterPassword
+            // 
+            this.txtboxMasterPassword.BackColor = System.Drawing.SystemColors.Control;
+            this.txtboxMasterPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtboxMasterPassword.Location = new System.Drawing.Point(9, 24);
+            this.txtboxMasterPassword.Name = "txtboxMasterPassword";
+            this.txtboxMasterPassword.Size = new System.Drawing.Size(448, 13);
+            this.txtboxMasterPassword.TabIndex = 2;
+            this.txtboxMasterPassword.UseSystemPasswordChar = true;
+            this.txtboxMasterPassword.TextChanged += new System.EventHandler(this.TxtboxMasterPassword_TextChanged);
+            this.txtboxMasterPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtboxMasterPassword_KeyPress);
+            // 
             // btnCreate
             // 
             this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreate.Location = new System.Drawing.Point(13, 252);
+            this.btnCreate.Location = new System.Drawing.Point(13, 245);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(462, 32);
-            this.btnCreate.TabIndex = 2;
+            this.btnCreate.TabIndex = 3;
             this.btnCreate.Text = "Create New Password List";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.BtnCreate_Click);
@@ -169,40 +175,67 @@
             this.tmrReveal.Interval = 1000;
             this.tmrReveal.Tick += new System.EventHandler(this.TmrReveal_Tick);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.panel2);
+            this.groupBox2.Controls.Add(this.lblPassStrength);
+            this.groupBox2.Controls.Add(this.chkboxReveal);
+            this.groupBox2.Controls.Add(this.txtboxMasterPassword);
+            this.groupBox2.Location = new System.Drawing.Point(12, 156);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(463, 77);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Master Password (MAKE SURE YOU WRITE THIS DOWN OR REMEMBER IT):";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.panel2.Location = new System.Drawing.Point(9, 41);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(448, 1);
+            this.panel2.TabIndex = 6;
+            // 
             // CreateNewPasswordList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(487, 300);
+            this.ClientSize = new System.Drawing.Size(487, 293);
+            this.ControlBox = false;
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlDragbar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "CreateNewPasswordList";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YourPass - Create a New Password List";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlDragbar.ResumeLayout(false);
+            this.pnlDragbar.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlDragbar;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.CheckBox chkboxReveal;
         private System.Windows.Forms.TextBox txtboxMasterPassword;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtListName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Timer tmrReveal;
         private System.Windows.Forms.Label lblPassStrength;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Panel pnlUnderPasswordName;
+        private System.Windows.Forms.Panel panel2;
     }
 }
