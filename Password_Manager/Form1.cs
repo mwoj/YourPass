@@ -21,12 +21,9 @@ namespace Password_Manager
     public partial class Form1 : Form, IMessageFilter
     {
         private ushort menuItemIndex = 0;
-        
-        private SecureString ssmp;
-
-        private List<Panel> menuItemList;
-
-        private DataGridViewRowCollection originalRows;
+        private readonly SecureString ssmp;
+        private readonly List<Panel> menuItemList;
+        private DataGridView originalTable;
 
         public Form1()
         {
@@ -43,44 +40,51 @@ namespace Password_Manager
 
             Bitmap passVaultIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.lock-icon.png"));
             Bitmap addNewPassIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.add-icon.png"));
-            
+            Bitmap editEntryIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.edit-icon.png"));
+
             picboxPasswordVault.Image = passVaultIcon;
             picboxPasswordVault.Update();
 
             picboxAddNewPassword.Image = addNewPassIcon;
             picboxAddNewPassword.Update();
 
+            picboxEditEntry.Image = editEntryIcon;
+            picboxEditEntry.Update();
+
 
             menuItemList = new List<Panel>
             {
                 pnlMenuItem1,
-                pnlMenuItem2
+                pnlMenuItem2,
+                pnlMenuItem3
             };
+            
+            dgvPasswordVault.ClearSelection();
+            txtboxServiceName.Select();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            lblTitle.Text = $"YourPass - V{Program.VERSION_NUM:0.0}";
+            lblTitle.Text = Program.GetCaptionTitle(string.Empty);
             LoadPasswordVault();
         }
+        
+        #region UI/UX Code
+
+        private Color menuItemSelected = Color.LightGray;
+        private Color menuItemHighlighted = Color.Silver;
+        private Color menuItemDeselected = Color.DarkGray;
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
         }
-
         private void BtnMinimize_Click(object sender, EventArgs e)
         {
             FormBorderStyle = FormBorderStyle.Sizable;
             WindowState = FormWindowState.Minimized;
             FormBorderStyle = FormBorderStyle.None;
         }
-
-        #region UI/UX Code
-
-        private Color menuItemSelected = Color.LightGray;
-        private Color menuItemHighlighted = Color.Silver;
-        private Color menuItemDeselected = Color.DarkGray;
 
         private void PnlMenuItem1_MouseEnter(object sender, EventArgs e)
         {
@@ -116,7 +120,7 @@ namespace Password_Manager
             if (pnlMenuItem1.BackColor != menuItemSelected)
                 pnlMenuItem1.BackColor = menuItemHighlighted;
         }
-        private void PasswordVaultClicked()
+        public void PasswordVaultClicked()
         {
             if (pnlMenuItem1.BackColor != menuItemSelected)
                 pnlMenuItem1.BackColor = menuItemSelected;
@@ -164,6 +168,57 @@ namespace Password_Manager
                 pnlMenuItem2.BackColor = menuItemSelected;
             DeselectAllOtherItems(pnlMenuItem2);
             menuItemIndex = 1;
+            Hide();
+            new AddNewPassword(this).Show();
+        }
+        public void NewPasswordAdded()
+        {
+            PasswordVaultClicked();
+            LoadPasswordVault();
+        }
+
+        private void PnlEditEntry_MouseEnter(object sender, EventArgs e)
+        {
+            EditEntryEntered();
+        }
+        private void PnlEditEntry_MouseLeave(object sender, EventArgs e)
+        {
+            if (pnlMenuItem3.BackColor != menuItemSelected)
+                pnlMenuItem3.BackColor = menuItemDeselected;
+        }
+        private void PnlEditEntry_MouseClick(object sender, MouseEventArgs e)
+        {
+            EditEntryClicked();
+        }
+        private void LblEditEntry_MouseEnter(object sender, EventArgs e)
+        {
+            EditEntryEntered();
+        }
+        private void LblEditEntry_MouseClick(object sender, MouseEventArgs e)
+        {
+            EditEntryClicked();
+        }
+        private void PicboxEditEntry_MouseEnter(object sender, EventArgs e)
+        {
+            EditEntryEntered();
+        }
+        private void PicboxEditEntry_MouseClick(object sender, MouseEventArgs e)
+        {
+            EditEntryClicked();
+        }
+        private void EditEntryClicked()
+        {
+            if (pnlMenuItem3.BackColor != menuItemSelected)
+                pnlMenuItem3.BackColor = menuItemSelected;
+            DeselectAllOtherItems(pnlMenuItem3);
+            menuItemIndex = 2;
+
+            // Functionality Here
+        }
+        private void EditEntryEntered()
+        {
+            if (pnlMenuItem3.BackColor != menuItemSelected)
+                pnlMenuItem3.BackColor = menuItemHighlighted;
         }
 
         private void BtnRetrievePassword_Click(object sender, EventArgs e)
@@ -177,19 +232,9 @@ namespace Password_Manager
 
         public bool PreFilterMessage(ref Message m)
         {
-            if (m.Msg == Program.WM_LBUTTONDOWN && (FromHandle(m.HWnd) == pnlDragbar || FromHandle(m.HWnd) == lblTitle))
-            {
-                ReleaseCapture();
-                SendMessage(Handle, Program.WM_NCLBUTTONDOWN, Program.HT_CAPTION, 0);
-                return true;
-            }
-            return false;
+            return Program.PreFilterMessage(ref m, this, pnlDragbar, lblTitle);
         }
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-        
+
         private void DeselectAllOtherItems(Panel selectedItem)
         {
             for (int i = 0; i < menuItemList.Count; i++)
@@ -198,6 +243,8 @@ namespace Password_Manager
         }
 
         #endregion
+
+        #region Password Retrieval and Disposal
         private void LoadPasswordVault()
         {
             dgvPasswordVault.Rows.Clear();
@@ -206,10 +253,8 @@ namespace Password_Manager
                 var output = conn.Query<Service>("SELECT service_name, email, username FROM PasswordVault;").ToList();
                 for (int i = 0; i < output.Count; i++)
                     dgvPasswordVault.Rows.Add(output[i].ServiceName, output[i].Email, output[i].Name);
-                
-                //TODO: Clone rows received from DB in originalRows var.
-
             }
+            originalTable = CopyDataGridView(dgvPasswordVault);
         }
 
         private string RetrievePasswordFromVault(string service_name)
@@ -228,7 +273,7 @@ namespace Password_Manager
         }
 
         // Credit For Method: https://stackoverflow.com/questions/818704/how-to-convert-securestring-to-system-string
-        private string GetMasterPassword()
+        public string GetMasterPassword()
         {
             IntPtr valuePtr = IntPtr.Zero;
             try
@@ -249,29 +294,82 @@ namespace Password_Manager
             GC.WaitForPendingFinalizers();
         }
 
+        #endregion
+
+        #region Result Filtering
         private void TxtboxServiceName_KeyPress(object sender, KeyPressEventArgs e)
         {
-            FilterResults();
+            if (e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Delete)
+            {
+                if (txtboxServiceName.Text.Length - 1 <= 0)
+                {
+                    dgvPasswordVault.Rows.Clear();
+                    for (int i = 0; i < originalTable.Rows.Count; i++)
+                        dgvPasswordVault.Rows.Add(originalTable.Rows[i].Cells[0].Value, originalTable.Rows[i].Cells[1].Value, originalTable.Rows[i].Cells[2].Value);
+                }
+            }
+            else
+                FilterResults(txtboxServiceName.Text + e.KeyChar);
         }
 
-        private void FilterResults()
+        private void FilterResults(string search_text)
         {
             dgvPasswordVault.Rows.Clear();
 
-            HashSet<char> filter = new HashSet<char>(txtboxServiceName.Text.ToCharArray());
-
-            for (int i = 0; i < originalRows.Count; i++) // O(n) where n is the amount of services stored.
+            List<char> caseInsensitiveCharArray = new List<char>();
+            for (int i = 0; i < search_text.Length; i++)
             {
-                string currentServiceName = originalRows[i].Cells[0].Value.ToString();
+                caseInsensitiveCharArray.Add(char.ToLowerInvariant(search_text[i]));
+                caseInsensitiveCharArray.Add(char.ToUpperInvariant(search_text[i]));
+            }
+
+            HashSet<char> filter = new HashSet<char>(caseInsensitiveCharArray);
+            DataGridView originalTableClone = CopyDataGridView(originalTable);
+
+            for (int i = 0; i < originalTableClone.Rows.Count; i++) // O(n) where n is the amount of services stored.
+            {
+                string currentServiceName = originalTableClone.Rows[i].Cells[0].Value.ToString();
                 for (int j = 0; j < currentServiceName.Length; j++) // Worst Case O(m), where m is the amount of characters in the service name.
                 {
                     if (filter.Contains(currentServiceName[j]))
                     {
-                        dgvPasswordVault.Rows.Add(originalRows[i]);
+                        dgvPasswordVault.Rows.Add(originalTableClone.Rows[i].Cells[0].Value, originalTableClone.Rows[i].Cells[1].Value, originalTableClone.Rows[i].Cells[2].Value);
                         break;
                     }
                 }
             }
         }
+
+        // Credit for Method: https://stackoverflow.com/questions/6336239/copy-datagridviews-rows-into-another-datagridview
+        private DataGridView CopyDataGridView(DataGridView dgv_org)
+        {
+            DataGridView dgvCopy = new DataGridView();
+            try
+            {
+                if (dgvCopy.Columns.Count == 0)
+                    foreach (DataGridViewColumn dgvc in dgv_org.Columns)
+                        dgvCopy.Columns.Add(dgvc.Clone() as DataGridViewColumn);
+
+                DataGridViewRow row = new DataGridViewRow();
+
+                for (int i = 0; i < dgv_org.Rows.Count; i++)
+                {
+                    row = (DataGridViewRow)dgv_org.Rows[i].Clone();
+                    int intColIndex = 0;
+                    foreach (DataGridViewCell cell in dgv_org.Rows[i].Cells)
+                    {
+                        row.Cells[intColIndex].Value = cell.Value;
+                        intColIndex++;
+                    }
+                    dgvCopy.Rows.Add(row);
+                }
+                dgvCopy.AllowUserToAddRows = false;
+                dgvCopy.Refresh();
+
+            } catch (Exception) { }
+            return dgvCopy;
+        }
+
+        #endregion
     }
 }

@@ -20,7 +20,7 @@ namespace Password_Manager
     public partial class Login : Form, IMessageFilter
     {
         public readonly string PASSWORD_VAULT_DIRECTORY;
-        private List<string> passwordVaults;
+        private readonly List<string> passwordVaults;
 
         public Login()
         {
@@ -55,19 +55,8 @@ namespace Password_Manager
 
         public bool PreFilterMessage(ref Message m)
         {
-            if (m.Msg == Program.WM_LBUTTONDOWN && (FromHandle(m.HWnd) == pnlDragbar || FromHandle(m.HWnd) == lblWelcome))
-            {
-                ReleaseCapture();
-                SendMessage(Handle, Program.WM_NCLBUTTONDOWN, Program.HT_CAPTION, 0);
-                return true;
-            }
-            return false;
+            return Program.PreFilterMessage(ref m, this, pnlDragbar, lblWelcome);
         }
-
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
 
         private void BtnExit_Click(object sender, EventArgs e)
         {

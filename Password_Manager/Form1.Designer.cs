@@ -33,8 +33,8 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlDragbar = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
+            this.pnlOptions = new System.Windows.Forms.Panel();
+            this.lblOptions = new System.Windows.Forms.Label();
             this.pnlMenuItem2 = new System.Windows.Forms.Panel();
             this.picboxAddNewPassword = new System.Windows.Forms.PictureBox();
             this.lblAddNewService = new System.Windows.Forms.Label();
@@ -55,12 +55,15 @@
             this.clmnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmnUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmnEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pnlMenuItem3 = new System.Windows.Forms.Panel();
+            this.picboxEditEntry = new System.Windows.Forms.PictureBox();
+            this.lblEditEntry = new System.Windows.Forms.Label();
             this.pnlDragbar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.pnlOptions.SuspendLayout();
             this.pnlMenuItem2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxAddNewPassword)).BeginInit();
             this.pnlMenuItem1.SuspendLayout();
@@ -68,6 +71,8 @@
             this.pnlPasswordVault.SuspendLayout();
             this.grpbxPasswordRetrieval.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswordVault)).BeginInit();
+            this.pnlMenuItem3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxEditEntry)).BeginInit();
             this.SuspendLayout();
             // 
             // btnExit
@@ -112,7 +117,7 @@
             this.pnlDragbar.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlDragbar.Location = new System.Drawing.Point(0, 0);
             this.pnlDragbar.Name = "pnlDragbar";
-            this.pnlDragbar.Size = new System.Drawing.Size(800, 47);
+            this.pnlDragbar.Size = new System.Drawing.Size(800, 64);
             this.pnlDragbar.TabIndex = 3;
             // 
             // splitContainer1
@@ -128,7 +133,8 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Gray;
-            this.splitContainer1.Panel1.Controls.Add(this.panel2);
+            this.splitContainer1.Panel1.Controls.Add(this.pnlMenuItem3);
+            this.splitContainer1.Panel1.Controls.Add(this.pnlOptions);
             this.splitContainer1.Panel1.Controls.Add(this.pnlMenuItem2);
             this.splitContainer1.Panel1.Controls.Add(this.pnlMenuItem1);
             // 
@@ -139,24 +145,25 @@
             this.splitContainer1.SplitterDistance = 196;
             this.splitContainer1.TabIndex = 5;
             // 
-            // panel2
+            // pnlOptions
             // 
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 459);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(196, 53);
-            this.panel2.TabIndex = 2;
+            this.pnlOptions.Controls.Add(this.lblOptions);
+            this.pnlOptions.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlOptions.Location = new System.Drawing.Point(0, 459);
+            this.pnlOptions.Name = "pnlOptions";
+            this.pnlOptions.Size = new System.Drawing.Size(196, 53);
+            this.pnlOptions.TabIndex = 2;
             // 
-            // label2
+            // lblOptions
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(58, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 18);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Options";
+            this.lblOptions.AutoSize = true;
+            this.lblOptions.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOptions.Location = new System.Drawing.Point(58, 15);
+            this.lblOptions.Name = "lblOptions";
+            this.lblOptions.Size = new System.Drawing.Size(56, 18);
+            this.lblOptions.TabIndex = 2;
+            this.lblOptions.Text = "Options";
+            this.lblOptions.Visible = false;
             // 
             // pnlMenuItem2
             // 
@@ -248,7 +255,7 @@
             // 
             // grpbxPasswordRetrieval
             // 
-            this.grpbxPasswordRetrieval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.grpbxPasswordRetrieval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpbxPasswordRetrieval.Controls.Add(this.lblPasswordRetrieved);
             this.grpbxPasswordRetrieval.Controls.Add(this.btnDisposePassword);
@@ -354,7 +361,8 @@
             this.dgvPasswordVault.AllowUserToDeleteRows = false;
             this.dgvPasswordVault.AllowUserToResizeColumns = false;
             this.dgvPasswordVault.AllowUserToResizeRows = false;
-            this.dgvPasswordVault.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvPasswordVault.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPasswordVault.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPasswordVault.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -395,6 +403,43 @@
             this.clmnEmail.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.clmnEmail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             // 
+            // pnlMenuItem3
+            // 
+            this.pnlMenuItem3.BackColor = System.Drawing.Color.DarkGray;
+            this.pnlMenuItem3.Controls.Add(this.picboxEditEntry);
+            this.pnlMenuItem3.Controls.Add(this.lblEditEntry);
+            this.pnlMenuItem3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlMenuItem3.Location = new System.Drawing.Point(0, 106);
+            this.pnlMenuItem3.Name = "pnlMenuItem3";
+            this.pnlMenuItem3.Size = new System.Drawing.Size(196, 53);
+            this.pnlMenuItem3.TabIndex = 5;
+            this.pnlMenuItem3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PnlEditEntry_MouseClick);
+            this.pnlMenuItem3.MouseEnter += new System.EventHandler(this.PnlEditEntry_MouseEnter);
+            this.pnlMenuItem3.MouseLeave += new System.EventHandler(this.PnlEditEntry_MouseLeave);
+            // 
+            // picboxEditEntry
+            // 
+            this.picboxEditEntry.Location = new System.Drawing.Point(3, 4);
+            this.picboxEditEntry.Name = "picboxEditEntry";
+            this.picboxEditEntry.Size = new System.Drawing.Size(45, 45);
+            this.picboxEditEntry.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picboxEditEntry.TabIndex = 4;
+            this.picboxEditEntry.TabStop = false;
+            this.picboxEditEntry.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicboxEditEntry_MouseClick);
+            this.picboxEditEntry.MouseEnter += new System.EventHandler(this.PicboxEditEntry_MouseEnter);
+            // 
+            // lblEditEntry
+            // 
+            this.lblEditEntry.AutoSize = true;
+            this.lblEditEntry.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEditEntry.Location = new System.Drawing.Point(62, 17);
+            this.lblEditEntry.Name = "lblEditEntry";
+            this.lblEditEntry.Size = new System.Drawing.Size(66, 18);
+            this.lblEditEntry.TabIndex = 1;
+            this.lblEditEntry.Text = "Edit Entry";
+            this.lblEditEntry.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LblEditEntry_MouseClick);
+            this.lblEditEntry.MouseEnter += new System.EventHandler(this.LblEditEntry_MouseEnter);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -403,6 +448,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.pnlDragbar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(582, 386);
             this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -414,8 +460,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.pnlOptions.ResumeLayout(false);
+            this.pnlOptions.PerformLayout();
             this.pnlMenuItem2.ResumeLayout(false);
             this.pnlMenuItem2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxAddNewPassword)).EndInit();
@@ -427,6 +473,9 @@
             this.grpbxPasswordRetrieval.ResumeLayout(false);
             this.grpbxPasswordRetrieval.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswordVault)).EndInit();
+            this.pnlMenuItem3.ResumeLayout(false);
+            this.pnlMenuItem3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxEditEntry)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -438,8 +487,8 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel pnlDragbar;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel pnlOptions;
+        private System.Windows.Forms.Label lblOptions;
         private System.Windows.Forms.Panel pnlMenuItem2;
         private System.Windows.Forms.Label lblAddNewService;
         private System.Windows.Forms.Panel pnlMenuItem1;
@@ -460,6 +509,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clmnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmnUsername;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmnEmail;
+        private System.Windows.Forms.Panel pnlMenuItem3;
+        private System.Windows.Forms.PictureBox picboxEditEntry;
+        private System.Windows.Forms.Label lblEditEntry;
     }
 }
 

@@ -169,17 +169,7 @@ namespace Password_Manager
 
         public bool PreFilterMessage(ref Message m)
         {
-            if (m.Msg == Program.WM_LBUTTONDOWN && (FromHandle(m.HWnd) == pnlDragbar || FromHandle(m.HWnd) == lblTitle))
-            {
-                ReleaseCapture();
-                SendMessage(Handle, Program.WM_NCLBUTTONDOWN, Program.HT_CAPTION, 0);
-                return true;
-            }
-            return false;
+            return Program.PreFilterMessage(ref m, this, pnlDragbar, lblTitle);
         }
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
     }
 }
