@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Dapper;
 
@@ -19,18 +13,23 @@ namespace Password_Manager
 {
     public partial class CreateNewPasswordList : Form, IMessageFilter
     {
-        private readonly Form loginForm;
+        private readonly Login loginForm;
         public CreateNewPasswordList()
         {
             InitializeComponent();
             Application.AddMessageFilter(this);
         }
 
-        public CreateNewPasswordList(Form loginForm)
+        public CreateNewPasswordList(Login loginForm)
         {
             InitializeComponent();
             this.loginForm = loginForm;
             Application.AddMessageFilter(this);
+
+            Bitmap mainIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.key-icon.png"));
+
+            picboxIcon.Image = mainIcon;
+            picboxIcon.Update();
         }
 
         private void ChkboxReveal_CheckedChanged(object sender, EventArgs e)
@@ -52,7 +51,7 @@ namespace Password_Manager
         private void BtnExit_Click(object sender, EventArgs e)
         {
             Close();
-            loginForm.Show();
+            loginForm.ShowFormHook();
         }
 
         private void BtnCreate_Click(object sender, EventArgs e)
@@ -82,8 +81,14 @@ namespace Password_Manager
 
             // Create Password Database
             SQLiteConnection.CreateFile(Path.GetDirectoryName(Application.ExecutablePath) + $"\\Vault\\{vaultName}");
+
+            // Set Initial Connection String
             Program.CurrentConnectionString = $"DataSource=.\\Vault\\{vaultName};Version=3;";
+
+            // Generate the cipher text that we will use to check and see if the master password provided is correct.
             string ciphertext = Crypto.SimpleEncryptWithPassword("correct_password", txtboxMasterPassword.Text);
+
+            // Insert the entry that will be used to check if the master password provided is correct.
             using (IDbConnection connection = new SQLiteConnection(Program.CurrentConnectionString))
             {
                 string tableSQL = "CREATE TABLE \"PasswordVault\" (\"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, \"service_name\" TEXT NOT NULL, \"email\" TEXT, \"username\" TEXT, \"encrypted_password\" TEXT NOT NULL);";
@@ -96,7 +101,7 @@ namespace Password_Manager
 
             MessageBox.Show($"Success! The password vault \"{vaultName}\" has been created in:\n\n{Path.GetDirectoryName(Application.ExecutablePath) + $"\\Vault\\{vaultName}"}", "YourPass - Success", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
             Close();
-            loginForm.Show();
+            loginForm.ShowFormHook();
         }
 
         private bool StringContains(string stringToCheck, char[] listOfChars)
@@ -109,8 +114,6 @@ namespace Password_Manager
 
         private void TxtboxMasterPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
-                btnCreate.PerformClick();
             CalculatePasswordStrength();
         }
 
@@ -170,6 +173,15 @@ namespace Password_Manager
         public bool PreFilterMessage(ref Message m)
         {
             return Program.PreFilterMessage(ref m, this, pnlDragbar, lblTitle);
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= Program.CS_DROPSHADOW;
+                return cp;
+            }
         }
     }
 }

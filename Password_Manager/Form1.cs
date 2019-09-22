@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Hosting;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Dapper;
 
@@ -21,9 +16,14 @@ namespace Password_Manager
     public partial class Form1 : Form, IMessageFilter
     {
         private ushort menuItemIndex = 0;
-        private readonly SecureString ssmp;
+        private readonly Login loginForm;
+        private readonly string vaultName;
+        private SecureString ssmp;
         private readonly List<Panel> menuItemList;
         private DataGridView originalTable;
+
+        // Created to fix weird bug with the custom resizing method WndProc.
+        private readonly bool isFormLoaded;
 
         public Form1()
         {
@@ -31,16 +31,28 @@ namespace Password_Manager
             Application.AddMessageFilter(this);
         }
 
-        public Form1(SecureString ssmp)
+        public Form1(Login loginForm, string vaultName, SecureString ssmp)
         {
+            this.loginForm = loginForm;
+            this.vaultName = vaultName;
             this.ssmp = ssmp;
             InitializeComponent();
             Application.AddMessageFilter(this);
+            isFormLoaded = true;
 
 
             Bitmap passVaultIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.lock-icon.png"));
             Bitmap addNewPassIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.add-icon.png"));
             Bitmap editEntryIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.edit-icon.png"));
+            
+            Bitmap mainWindowIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.key-icon.png"));
+            // Credit for mainWindowIcon -> "Icon made by Freepik[https://www.flaticon.com/authors/freepik] from www.flaticon.com"
+            
+            Bitmap switchIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.switch-icon.png"));
+            // Credit for switchIcon -> "Icon made by Freepik[https://www.flaticon.com/authors/freepik] from www.flaticon.com"
+
+            Bitmap aboutIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.question-icon.png"));
+            // Credit for aboutIcon -> "Icon made by Roundicons[https://www.flaticon.com/authors/roundicons] from www.flaticon.com"
 
             picboxPasswordVault.Image = passVaultIcon;
             picboxPasswordVault.Update();
@@ -51,21 +63,31 @@ namespace Password_Manager
             picboxEditEntry.Image = editEntryIcon;
             picboxEditEntry.Update();
 
+            picboxWindowIcon.Image = mainWindowIcon;
+            picboxWindowIcon.Update();
+
+            picboxSwitchVaults.Image = switchIcon;
+            picboxSwitchVaults.Update();
+
+            picboxAbout.Image = aboutIcon;
+            picboxAbout.Update();
+
 
             menuItemList = new List<Panel>
             {
                 pnlMenuItem1,
                 pnlMenuItem2,
-                pnlMenuItem3
+                pnlMenuItem3,
+                pnlMenuItem4,
+                pnlMenuItem99
             };
             
-            dgvPasswordVault.ClearSelection();
             txtboxServiceName.Select();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            lblTitle.Text = Program.GetCaptionTitle(string.Empty);
+            lblTitle.Text = Program.GetCaptionTitle($"Viewing \"{vaultName}\"");
             LoadPasswordVault();
         }
         
@@ -75,6 +97,7 @@ namespace Password_Manager
         private Color menuItemHighlighted = Color.Silver;
         private Color menuItemDeselected = Color.DarkGray;
 
+        #region Titlebar/Window Controls
         private void BtnExit_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
@@ -85,7 +108,101 @@ namespace Password_Manager
             WindowState = FormWindowState.Minimized;
             FormBorderStyle = FormBorderStyle.None;
         }
+        public bool PreFilterMessage(ref Message m)
+        {
+            return Program.PreFilterMessage(ref m, this, pnlDragbar, lblTitle);
+        }
+        // Credit for Method: https://stackoverflow.com/questions/1535826/resize-borderless-window-on-bottom-right-corner
+        #region credit
+        protected override void WndProc(ref Message m)
+        {
+            const int wmNcHitTest = 0x84;
+            const int htLeft = 10;
+            const int htRight = 11;
+            const int htTop = 12;
+            const int htTopLeft = 13;
+            const int htTopRight = 14;
+            const int htBottom = 15;
+            const int htBottomLeft = 16;
+            const int htBottomRight = 17;
 
+            if (m.Msg == wmNcHitTest)
+            {
+                int x = (int)(m.LParam.ToInt64() & 0xFFFF);
+                int y = (int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16);
+                Point pt = PointToClient(new Point(x, y));
+                Size clientSize = ClientSize;
+                ///allow resize on the lower right corner
+                if (pt.X >= clientSize.Width - 16 && pt.Y >= clientSize.Height - 16 && clientSize.Height >= 16)
+                {
+                    m.Result = (IntPtr)(IsMirrored ? htBottomLeft : htBottomRight);
+                    return;
+                }
+                ///allow resize on the lower left corner
+                if (pt.X <= 16 && pt.Y >= clientSize.Height - 16 && clientSize.Height >= 16)
+                {
+                    m.Result = (IntPtr)(IsMirrored ? htBottomRight : htBottomLeft);
+                    return;
+                }
+                ///allow resize on the upper right corner
+                if (pt.X <= 16 && pt.Y <= 16 && clientSize.Height >= 16)
+                {
+                    m.Result = (IntPtr)(IsMirrored ? htTopRight : htTopLeft);
+                    return;
+                }
+                ///allow resize on the upper left corner
+                if (pt.X >= clientSize.Width - 16 && pt.Y <= 16 && clientSize.Height >= 16)
+                {
+                    m.Result = (IntPtr)(IsMirrored ? htTopLeft : htTopRight);
+                    return;
+                }
+                ///allow resize on the top border
+                if (pt.Y <= 16 && clientSize.Height >= 16)
+                {
+                    m.Result = (IntPtr)(htTop);
+                    return;
+                }
+                ///allow resize on the bottom border
+                if (pt.Y >= clientSize.Height - 16 && clientSize.Height >= 16)
+                {
+                    m.Result = (IntPtr)(htBottom);
+                    return;
+                }
+                ///allow resize on the left border
+                if (pt.X <= 16 && clientSize.Height >= 16)
+                {
+                    m.Result = (IntPtr)(htLeft);
+                    return;
+                }
+                ///allow resize on the right border
+                if (pt.X >= clientSize.Width - 16 && clientSize.Height >= 16)
+                {
+                    m.Result = (IntPtr)(htRight);
+                    return;
+                }
+            }
+
+            if (isFormLoaded)
+                base.WndProc(ref m);
+        }
+        
+        //***********************************************************
+        //***********************************************************
+        //This gives us the drop shadow behind the borderless form
+        private const int CS_DROPSHADOW = 0x20000;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= CS_DROPSHADOW;
+                return cp;
+            }
+        }
+        #endregion
+        #endregion
+
+        #region Password Vault/Menu Item 1
         private void PnlMenuItem1_MouseEnter(object sender, EventArgs e)
         {
             PasswordVaultMouseEntered();
@@ -127,7 +244,9 @@ namespace Password_Manager
             DeselectAllOtherItems(pnlMenuItem1);
             menuItemIndex = 0;
         }
+        #endregion
 
+        #region Add a New Password/Menu Item 2
         private void PnlMenuItem2_MouseEnter(object sender, EventArgs e)
         {
             AddNewPasswordMouseEntered();
@@ -168,15 +287,17 @@ namespace Password_Manager
                 pnlMenuItem2.BackColor = menuItemSelected;
             DeselectAllOtherItems(pnlMenuItem2);
             menuItemIndex = 1;
-            Hide();
-            new AddNewPassword(this).Show();
+            
+            new AddNewPassword(this).ShowDialog();
         }
-        public void NewPasswordAdded()
+        public void VaultInformationUpdated()
         {
             PasswordVaultClicked();
             LoadPasswordVault();
         }
+        #endregion
 
+        #region Edit Entry/Menu Item 3
         private void PnlEditEntry_MouseEnter(object sender, EventArgs e)
         {
             EditEntryEntered();
@@ -210,30 +331,133 @@ namespace Password_Manager
         {
             if (pnlMenuItem3.BackColor != menuItemSelected)
                 pnlMenuItem3.BackColor = menuItemSelected;
-            DeselectAllOtherItems(pnlMenuItem3);
+            DeselectAllOtherItems(pnlMenuItem1);
             menuItemIndex = 2;
 
-            // Functionality Here
+            if (dgvPasswordVault.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Error: You must select one specific service to edit.", Program.GetCaptionTitle("Service Selection Error"), MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
+            // Functionality
+            string serv_name = dgvPasswordVault.SelectedRows[0].Cells[0].Value as string;
+            new EditEntry(this, serv_name).ShowDialog();
         }
         private void EditEntryEntered()
         {
             if (pnlMenuItem3.BackColor != menuItemSelected)
                 pnlMenuItem3.BackColor = menuItemHighlighted;
         }
+        #endregion
 
-        private void BtnRetrievePassword_Click(object sender, EventArgs e)
+        #region Switch Password Vault/Menu Item 4
+        private void PnlMenuItem4_MouseEnter(object sender, EventArgs e)
         {
-            // If there isn't exactly one row that is selected, return.
-            if (dgvPasswordVault.SelectedRows.Count != 1) return;
-
-            // Set the plain text password in the textbox by retrieving the service name from the user selected row.
-            txtboxPasswordRetrieval.Text = RetrievePasswordFromVault(dgvPasswordVault.SelectedRows[0].Cells[0].Value.ToString());
+            SwitchVaultMouseEntered();
         }
-
-        public bool PreFilterMessage(ref Message m)
+        private void PnlMenuItem4_MouseLeave(object sender, EventArgs e)
         {
-            return Program.PreFilterMessage(ref m, this, pnlDragbar, lblTitle);
+            if (pnlMenuItem4.BackColor != menuItemSelected)
+                pnlMenuItem4.BackColor = menuItemDeselected;
         }
+        private void PnlMenuItem4_MouseClick(object sender, MouseEventArgs e)
+        {
+            SwitchVaultClicked();
+        }
+        private void LblSwitchVaults_MouseEnter(object sender, EventArgs e)
+        {
+            SwitchVaultMouseEntered();
+        }
+        private void LblSwitchVaults_MouseClick(object sender, MouseEventArgs e)
+        {
+            SwitchVaultClicked();
+        }
+        private void PicboxSwitchVaults_MouseEnter(object sender, EventArgs e)
+        {
+            SwitchVaultMouseEntered();
+        }
+        private void PicboxSwitchVaults_MouseClick(object sender, MouseEventArgs e)
+        {
+            SwitchVaultClicked();
+        }
+        private void SwitchVaultMouseEntered()
+        {
+            if (pnlMenuItem4.BackColor != menuItemSelected)
+                pnlMenuItem4.BackColor = menuItemHighlighted;
+        }
+        private void SwitchVaultClicked()
+        {
+            if (pnlMenuItem4.BackColor != menuItemSelected)
+                pnlMenuItem4.BackColor = menuItemSelected;
+            DeselectAllOtherItems(pnlMenuItem4);
+            menuItemIndex = 3;
+
+            // Functionality
+
+            // Remove old master password from memory
+            ssmp.Dispose();
+            ssmp = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            // Remove the any plain text password that is still being displayed.
+            btnDisposePassword.PerformClick();
+
+            // Close the current view
+            Close();
+
+            // Show login form to user again
+            loginForm.Show();
+        }
+        #endregion
+
+        #region About/Last Menu Item
+        private void PnlMenuItem99_MouseEnter(object sender, EventArgs e)
+        {
+            AboutMouseEntered();
+        }
+        private void PnlMenuItem99_MouseLeave(object sender, EventArgs e)
+        {
+            if (pnlMenuItem99.BackColor != menuItemSelected)
+                pnlMenuItem99.BackColor = menuItemDeselected;
+        }
+        private void PnlMenuItem99_MouseClick(object sender, MouseEventArgs e)
+        {
+            AboutClicked();
+        }
+        private void LblAbout_MouseEnter(object sender, EventArgs e)
+        {
+            AboutMouseEntered();
+        }
+        private void LblAbout_MouseClick(object sender, MouseEventArgs e)
+        {
+            AboutClicked();
+        }
+        private void PicboxAbout_MouseEnter(object sender, EventArgs e)
+        {
+            AboutMouseEntered();
+        }
+        private void PicboxAbout_MouseClick(object sender, MouseEventArgs e)
+        {
+            AboutClicked();
+        }
+        private void AboutMouseEntered()
+        {
+            if (pnlMenuItem99.BackColor != menuItemSelected)
+                pnlMenuItem99.BackColor = menuItemHighlighted;
+        }
+        private void AboutClicked()
+        {
+            if (pnlMenuItem99.BackColor != menuItemSelected)
+                pnlMenuItem99.BackColor = menuItemSelected;
+            DeselectAllOtherItems(pnlMenuItem99);
+            menuItemIndex = 99;
+
+            // Functionality
+            new About(this).ShowDialog();
+        }
+        #endregion
 
         private void DeselectAllOtherItems(Panel selectedItem)
         {
@@ -241,7 +465,6 @@ namespace Password_Manager
                 if (menuItemList[i] != selectedItem)
                     menuItemList[i].BackColor = menuItemDeselected;
         }
-
         #endregion
 
         #region Password Retrieval and Disposal
@@ -250,9 +473,9 @@ namespace Password_Manager
             dgvPasswordVault.Rows.Clear();
             using (IDbConnection conn = new SQLiteConnection(Program.CurrentConnectionString))
             {
-                var output = conn.Query<Service>("SELECT service_name, email, username FROM PasswordVault;").ToList();
+                var output = conn.Query<Service>("SELECT service_name, email, username FROM PasswordVault WHERE id != 1;").ToList();
                 for (int i = 0; i < output.Count; i++)
-                    dgvPasswordVault.Rows.Add(output[i].ServiceName, output[i].Email, output[i].Name);
+                    dgvPasswordVault.Rows.Add(output[i].ServiceName, output[i].Name, output[i].Email);
             }
             originalTable = CopyDataGridView(dgvPasswordVault);
         }
@@ -286,10 +509,33 @@ namespace Password_Manager
                 Marshal.ZeroFreeGlobalAllocUnicode(valuePtr);
             }
         }
+        
+        private void BtnRetrievePassword_Click(object sender, EventArgs e)
+        {
+            // If there isn't exactly one row that is selected, return.
+            if (dgvPasswordVault.SelectedRows.Count != 1) return;
 
+            //Dispose of Previous Password
+            btnDisposePassword.PerformClick();
+
+            // Create service_name local variable
+            string service_name = dgvPasswordVault.SelectedRows[0].Cells[0].Value.ToString();
+
+            // Update flavor text
+            lblPasswordRetrieved.Text = $"Password Retrieved from: \"{service_name}\"";
+
+            // Set the plain text password in the textbox by retrieving the service name from the user selected row.
+            txtboxPasswordRetrieval.Text = RetrievePasswordFromVault(service_name);
+        }
         private void BtnDisposePassword_Click(object sender, EventArgs e)
         {
+            // Update flavor text
+            lblPasswordRetrieved.Text = "Password Retrieved from: No Service Selected.";
+
+            // Zero out the string.
             txtboxPasswordRetrieval.Text = string.Empty;
+            
+            // Force GC to remove the string from memory.
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -307,6 +553,8 @@ namespace Password_Manager
                     for (int i = 0; i < originalTable.Rows.Count; i++)
                         dgvPasswordVault.Rows.Add(originalTable.Rows[i].Cells[0].Value, originalTable.Rows[i].Cells[1].Value, originalTable.Rows[i].Cells[2].Value);
                 }
+                else
+                    FilterResults(txtboxServiceName.Text.Substring(0, txtboxServiceName.Text.Length - 1));
             }
             else
                 FilterResults(txtboxServiceName.Text + e.KeyChar);
@@ -316,26 +564,24 @@ namespace Password_Manager
         {
             dgvPasswordVault.Rows.Clear();
 
-            List<char> caseInsensitiveCharArray = new List<char>();
+
+            string regex = string.Empty;
             for (int i = 0; i < search_text.Length; i++)
             {
-                caseInsensitiveCharArray.Add(char.ToLowerInvariant(search_text[i]));
-                caseInsensitiveCharArray.Add(char.ToUpperInvariant(search_text[i]));
+                if (i != 0)
+                    regex += $"[{search_text[i]}]+";
+                else
+                    regex += $"[{search_text[i]}]";
             }
 
-            HashSet<char> filter = new HashSet<char>(caseInsensitiveCharArray);
             DataGridView originalTableClone = CopyDataGridView(originalTable);
 
             for (int i = 0; i < originalTableClone.Rows.Count; i++) // O(n) where n is the amount of services stored.
             {
                 string currentServiceName = originalTableClone.Rows[i].Cells[0].Value.ToString();
-                for (int j = 0; j < currentServiceName.Length; j++) // Worst Case O(m), where m is the amount of characters in the service name.
+                if (Regex.Matches(currentServiceName, regex, RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant).Count > 0)
                 {
-                    if (filter.Contains(currentServiceName[j]))
-                    {
-                        dgvPasswordVault.Rows.Add(originalTableClone.Rows[i].Cells[0].Value, originalTableClone.Rows[i].Cells[1].Value, originalTableClone.Rows[i].Cells[2].Value);
-                        break;
-                    }
+                    dgvPasswordVault.Rows.Add(originalTableClone.Rows[i].Cells[0].Value, originalTableClone.Rows[i].Cells[1].Value, originalTableClone.Rows[i].Cells[2].Value);
                 }
             }
         }
@@ -371,5 +617,6 @@ namespace Password_Manager
         }
 
         #endregion
+
     }
 }

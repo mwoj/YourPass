@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Util;
@@ -27,6 +28,11 @@ namespace Password_Manager
             InitializeComponent();
             Application.AddMessageFilter(this);
             this.mainWindow = mainWindow;
+
+            Bitmap mainIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.add-icon.png"));
+
+            picboxIcon.Image = mainIcon;
+            picboxIcon.Update();
         }
 
         private void AddNewPassword_Load(object sender, EventArgs e)
@@ -56,7 +62,7 @@ namespace Password_Manager
             {
                 MessageBox.Show($"Success!\n\nThe entry \"{txtboxServiceName.Text}\" has been added to the vault.", Program.GetCaptionTitle("Successfully Added Entry"), MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
                 mainWindow.Show();
-                mainWindow.NewPasswordAdded();
+                mainWindow.VaultInformationUpdated();
                 Close();
             }
         }
@@ -92,6 +98,7 @@ namespace Password_Manager
                     }
                     catch (Exception)
                     {
+                        conn.Close();
                         transaction.Rollback();
                         return false;
                     }
@@ -103,6 +110,15 @@ namespace Password_Manager
         public bool PreFilterMessage(ref Message m)
         {
             return Program.PreFilterMessage(ref m, this, pnlDragbar, lblWindowTitle);
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= Program.CS_DROPSHADOW;
+                return cp;
+            }
         }
         private void BtnExit_Click(object sender, EventArgs e)
         {

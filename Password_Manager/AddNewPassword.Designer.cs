@@ -46,13 +46,17 @@
             this.lblEmail = new System.Windows.Forms.Label();
             this.grpboxOptional = new System.Windows.Forms.GroupBox();
             this.btnCreateEntry = new System.Windows.Forms.Button();
+            this.picboxIcon = new System.Windows.Forms.PictureBox();
             this.pnlDragbar.SuspendLayout();
             this.grpboxPasswordParameters.SuspendLayout();
             this.grpboxOptional.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlDragbar
             // 
+            this.pnlDragbar.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlDragbar.Controls.Add(this.picboxIcon);
             this.pnlDragbar.Controls.Add(this.lblWindowTitle);
             this.pnlDragbar.Controls.Add(this.btnExit);
             this.pnlDragbar.Dock = System.Windows.Forms.DockStyle.Top;
@@ -64,19 +68,19 @@
             // lblWindowTitle
             // 
             this.lblWindowTitle.AutoSize = true;
-            this.lblWindowTitle.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWindowTitle.Location = new System.Drawing.Point(12, 15);
+            this.lblWindowTitle.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWindowTitle.Location = new System.Drawing.Point(63, 21);
             this.lblWindowTitle.Name = "lblWindowTitle";
-            this.lblWindowTitle.Size = new System.Drawing.Size(295, 19);
+            this.lblWindowTitle.Size = new System.Drawing.Size(388, 22);
             this.lblWindowTitle.TabIndex = 3;
             this.lblWindowTitle.Text = "YourPass - Add a New Password to Your Vault";
             // 
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.Location = new System.Drawing.Point(538, 12);
+            this.btnExit.Location = new System.Drawing.Point(530, 17);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(24, 24);
+            this.btnExit.Size = new System.Drawing.Size(32, 32);
             this.btnExit.TabIndex = 6;
             this.btnExit.TabStop = false;
             this.btnExit.Text = "X";
@@ -87,6 +91,7 @@
             // 
             this.grpboxPasswordParameters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpboxPasswordParameters.BackColor = System.Drawing.SystemColors.Control;
             this.grpboxPasswordParameters.Controls.Add(this.pnlUnderPassword);
             this.grpboxPasswordParameters.Controls.Add(this.txtboxPassword);
             this.grpboxPasswordParameters.Controls.Add(this.lblPassword);
@@ -94,7 +99,7 @@
             this.grpboxPasswordParameters.Controls.Add(this.txtboxServiceName);
             this.grpboxPasswordParameters.Controls.Add(this.lblServiceName);
             this.grpboxPasswordParameters.Font = new System.Drawing.Font("Myanmar Text", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpboxPasswordParameters.Location = new System.Drawing.Point(12, 55);
+            this.grpboxPasswordParameters.Location = new System.Drawing.Point(12, 78);
             this.grpboxPasswordParameters.Name = "grpboxPasswordParameters";
             this.grpboxPasswordParameters.Size = new System.Drawing.Size(550, 183);
             this.grpboxPasswordParameters.TabIndex = 1;
@@ -215,8 +220,9 @@
             // 
             // grpboxOptional
             // 
-            this.grpboxOptional.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.grpboxOptional.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpboxOptional.BackColor = System.Drawing.SystemColors.Control;
             this.grpboxOptional.Controls.Add(this.lblEmail);
             this.grpboxOptional.Controls.Add(this.pnlUnderUsername);
             this.grpboxOptional.Controls.Add(this.txtboxEmail);
@@ -224,29 +230,43 @@
             this.grpboxOptional.Controls.Add(this.pnlUnderEmail);
             this.grpboxOptional.Controls.Add(this.txtboxUsername);
             this.grpboxOptional.Font = new System.Drawing.Font("Myanmar Text", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpboxOptional.Location = new System.Drawing.Point(12, 244);
+            this.grpboxOptional.Location = new System.Drawing.Point(12, 274);
             this.grpboxOptional.Name = "grpboxOptional";
-            this.grpboxOptional.Size = new System.Drawing.Size(550, 198);
+            this.grpboxOptional.Size = new System.Drawing.Size(550, 196);
             this.grpboxOptional.TabIndex = 2;
             this.grpboxOptional.TabStop = false;
             this.grpboxOptional.Text = "Optional Entry Parameters:";
             // 
             // btnCreateEntry
             // 
+            this.btnCreateEntry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCreateEntry.BackColor = System.Drawing.SystemColors.Control;
             this.btnCreateEntry.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateEntry.Location = new System.Drawing.Point(12, 453);
+            this.btnCreateEntry.Location = new System.Drawing.Point(43, 484);
             this.btnCreateEntry.Name = "btnCreateEntry";
-            this.btnCreateEntry.Size = new System.Drawing.Size(550, 40);
+            this.btnCreateEntry.Size = new System.Drawing.Size(482, 37);
             this.btnCreateEntry.TabIndex = 4;
             this.btnCreateEntry.Text = "Create New Password Entry";
-            this.btnCreateEntry.UseVisualStyleBackColor = true;
+            this.btnCreateEntry.UseVisualStyleBackColor = false;
             this.btnCreateEntry.Click += new System.EventHandler(this.BtnCreateEntry_Click);
+            // 
+            // picboxIcon
+            // 
+            this.picboxIcon.Location = new System.Drawing.Point(12, 12);
+            this.picboxIcon.Name = "picboxIcon";
+            this.picboxIcon.Size = new System.Drawing.Size(45, 45);
+            this.picboxIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picboxIcon.TabIndex = 7;
+            this.picboxIcon.TabStop = false;
             // 
             // AddNewPassword
             // 
+            this.AcceptButton = this.btnCreateEntry;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 508);
+            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.ClientSize = new System.Drawing.Size(574, 536);
             this.ControlBox = false;
             this.Controls.Add(this.btnCreateEntry);
             this.Controls.Add(this.grpboxOptional);
@@ -265,6 +285,7 @@
             this.grpboxPasswordParameters.PerformLayout();
             this.grpboxOptional.ResumeLayout(false);
             this.grpboxOptional.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -289,5 +310,6 @@
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.GroupBox grpboxOptional;
         private System.Windows.Forms.Button btnCreateEntry;
+        private System.Windows.Forms.PictureBox picboxIcon;
     }
 }

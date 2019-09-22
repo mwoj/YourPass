@@ -41,21 +41,24 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pnlDragbar = new System.Windows.Forms.Panel();
             this.passwordVaultWatcher = new System.IO.FileSystemWatcher();
+            this.picboxIcon = new System.Windows.Forms.PictureBox();
+            this.pnlDivider = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.pnlDragbar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.passwordVaultWatcher)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLogin
             // 
             this.btnLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogin.Location = new System.Drawing.Point(39, 234);
+            this.btnLogin.Location = new System.Drawing.Point(39, 237);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(403, 29);
             this.btnLogin.TabIndex = 2;
-            this.btnLogin.Text = "Access Password Bank";
+            this.btnLogin.Text = "Access Password Vault";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
@@ -70,13 +73,12 @@
             this.txtboxMasterPass.Size = new System.Drawing.Size(440, 13);
             this.txtboxMasterPass.TabIndex = 1;
             this.txtboxMasterPass.UseSystemPasswordChar = true;
-            this.txtboxMasterPass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtboxMasterPass_KeyPress);
             // 
             // lblWelcome
             // 
             this.lblWelcome.AutoSize = true;
             this.lblWelcome.Font = new System.Drawing.Font("Microsoft YaHei UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWelcome.Location = new System.Drawing.Point(12, 12);
+            this.lblWelcome.Location = new System.Drawing.Point(50, 14);
             this.lblWelcome.Name = "lblWelcome";
             this.lblWelcome.Size = new System.Drawing.Size(264, 28);
             this.lblWelcome.TabIndex = 2;
@@ -134,7 +136,7 @@
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.lblProfile);
             this.groupBox1.Controls.Add(this.menuPasswordDB);
-            this.groupBox1.Location = new System.Drawing.Point(17, 55);
+            this.groupBox1.Location = new System.Drawing.Point(17, 62);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(455, 73);
             this.groupBox1.TabIndex = 7;
@@ -149,7 +151,7 @@
             this.groupBox2.Controls.Add(this.pnlPasswordUnderbar);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.txtboxMasterPass);
-            this.groupBox2.Location = new System.Drawing.Point(17, 135);
+            this.groupBox2.Location = new System.Drawing.Point(17, 142);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(455, 85);
             this.groupBox2.TabIndex = 8;
@@ -177,6 +179,7 @@
             // 
             this.pnlDragbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlDragbar.Controls.Add(this.picboxIcon);
             this.pnlDragbar.Controls.Add(this.lblWelcome);
             this.pnlDragbar.Controls.Add(this.btnMinimize);
             this.pnlDragbar.Controls.Add(this.btnExit);
@@ -191,12 +194,31 @@
             this.passwordVaultWatcher.SynchronizingObject = this;
             this.passwordVaultWatcher.Created += new System.IO.FileSystemEventHandler(this.PasswordVaultWatcher_Created);
             // 
+            // picboxIcon
+            // 
+            this.picboxIcon.Location = new System.Drawing.Point(12, 10);
+            this.picboxIcon.Name = "picboxIcon";
+            this.picboxIcon.Size = new System.Drawing.Size(32, 32);
+            this.picboxIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picboxIcon.TabIndex = 5;
+            this.picboxIcon.TabStop = false;
+            // 
+            // pnlDivider
+            // 
+            this.pnlDivider.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.pnlDivider.Location = new System.Drawing.Point(5, 52);
+            this.pnlDivider.Name = "pnlDivider";
+            this.pnlDivider.Size = new System.Drawing.Size(475, 1);
+            this.pnlDivider.TabIndex = 10;
+            // 
             // Login
             // 
+            this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 287);
+            this.ClientSize = new System.Drawing.Size(485, 283);
             this.ControlBox = false;
+            this.Controls.Add(this.pnlDivider);
             this.Controls.Add(this.pnlDragbar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnLogin);
@@ -208,7 +230,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Password Manager - Login";
             this.Load += new System.EventHandler(this.Login_Load);
-            this.Shown += new System.EventHandler(this.Login_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -216,6 +237,7 @@
             this.pnlDragbar.ResumeLayout(false);
             this.pnlDragbar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.passwordVaultWatcher)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -235,5 +257,7 @@
         private System.Windows.Forms.Panel pnlDragbar;
         private System.IO.FileSystemWatcher passwordVaultWatcher;
         private System.Windows.Forms.Panel pnlPasswordUnderbar;
+        private System.Windows.Forms.PictureBox picboxIcon;
+        private System.Windows.Forms.Panel pnlDivider;
     }
 }

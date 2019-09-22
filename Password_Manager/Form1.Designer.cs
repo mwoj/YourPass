@@ -32,9 +32,17 @@
             this.btnMinimize = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlDragbar = new System.Windows.Forms.Panel();
+            this.picboxWindowIcon = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pnlOptions = new System.Windows.Forms.Panel();
-            this.lblOptions = new System.Windows.Forms.Label();
+            this.pnlMenuItem99 = new System.Windows.Forms.Panel();
+            this.picboxAbout = new System.Windows.Forms.PictureBox();
+            this.lblAbout = new System.Windows.Forms.Label();
+            this.pnlMenuItem4 = new System.Windows.Forms.Panel();
+            this.picboxSwitchVaults = new System.Windows.Forms.PictureBox();
+            this.lblSwitchVaults = new System.Windows.Forms.Label();
+            this.pnlMenuItem3 = new System.Windows.Forms.Panel();
+            this.picboxEditEntry = new System.Windows.Forms.PictureBox();
+            this.lblEditEntry = new System.Windows.Forms.Label();
             this.pnlMenuItem2 = new System.Windows.Forms.Panel();
             this.picboxAddNewPassword = new System.Windows.Forms.PictureBox();
             this.lblAddNewService = new System.Windows.Forms.Label();
@@ -42,6 +50,7 @@
             this.picboxPasswordVault = new System.Windows.Forms.PictureBox();
             this.lblVault = new System.Windows.Forms.Label();
             this.pnlPasswordVault = new System.Windows.Forms.Panel();
+            this.pnlResize = new System.Windows.Forms.Panel();
             this.grpbxPasswordRetrieval = new System.Windows.Forms.GroupBox();
             this.lblPasswordRetrieved = new System.Windows.Forms.Label();
             this.btnDisposePassword = new System.Windows.Forms.Button();
@@ -55,15 +64,19 @@
             this.clmnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmnUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmnEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pnlMenuItem3 = new System.Windows.Forms.Panel();
-            this.picboxEditEntry = new System.Windows.Forms.PictureBox();
-            this.lblEditEntry = new System.Windows.Forms.Label();
+            this.pnlDivider = new System.Windows.Forms.Panel();
             this.pnlDragbar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxWindowIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.pnlOptions.SuspendLayout();
+            this.pnlMenuItem99.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxAbout)).BeginInit();
+            this.pnlMenuItem4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxSwitchVaults)).BeginInit();
+            this.pnlMenuItem3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxEditEntry)).BeginInit();
             this.pnlMenuItem2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxAddNewPassword)).BeginInit();
             this.pnlMenuItem1.SuspendLayout();
@@ -71,8 +84,6 @@
             this.pnlPasswordVault.SuspendLayout();
             this.grpbxPasswordRetrieval.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswordVault)).BeginInit();
-            this.pnlMenuItem3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picboxEditEntry)).BeginInit();
             this.SuspendLayout();
             // 
             // btnExit
@@ -101,16 +112,19 @@
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
+            this.lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTitle.AutoEllipsis = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft YaHei UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(12, 19);
+            this.lblTitle.Location = new System.Drawing.Point(65, 23);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(109, 28);
+            this.lblTitle.Size = new System.Drawing.Size(647, 28);
             this.lblTitle.TabIndex = 2;
             this.lblTitle.Text = "YourPass";
             // 
             // pnlDragbar
             // 
+            this.pnlDragbar.Controls.Add(this.picboxWindowIcon);
             this.pnlDragbar.Controls.Add(this.lblTitle);
             this.pnlDragbar.Controls.Add(this.btnExit);
             this.pnlDragbar.Controls.Add(this.btnMinimize);
@@ -120,6 +134,15 @@
             this.pnlDragbar.Size = new System.Drawing.Size(800, 64);
             this.pnlDragbar.TabIndex = 3;
             // 
+            // picboxWindowIcon
+            // 
+            this.picboxWindowIcon.Location = new System.Drawing.Point(14, 13);
+            this.picboxWindowIcon.Name = "picboxWindowIcon";
+            this.picboxWindowIcon.Size = new System.Drawing.Size(45, 45);
+            this.picboxWindowIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picboxWindowIcon.TabIndex = 4;
+            this.picboxWindowIcon.TabStop = false;
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -127,43 +150,136 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 66);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 73);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Gray;
+            this.splitContainer1.Panel1.Controls.Add(this.pnlMenuItem99);
+            this.splitContainer1.Panel1.Controls.Add(this.pnlMenuItem4);
             this.splitContainer1.Panel1.Controls.Add(this.pnlMenuItem3);
-            this.splitContainer1.Panel1.Controls.Add(this.pnlOptions);
             this.splitContainer1.Panel1.Controls.Add(this.pnlMenuItem2);
             this.splitContainer1.Panel1.Controls.Add(this.pnlMenuItem1);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pnlPasswordVault);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 512);
+            this.splitContainer1.Size = new System.Drawing.Size(797, 512);
             this.splitContainer1.SplitterDistance = 196;
             this.splitContainer1.TabIndex = 5;
+            this.splitContainer1.TabStop = false;
             // 
-            // pnlOptions
+            // pnlMenuItem99
             // 
-            this.pnlOptions.Controls.Add(this.lblOptions);
-            this.pnlOptions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlOptions.Location = new System.Drawing.Point(0, 459);
-            this.pnlOptions.Name = "pnlOptions";
-            this.pnlOptions.Size = new System.Drawing.Size(196, 53);
-            this.pnlOptions.TabIndex = 2;
+            this.pnlMenuItem99.BackColor = System.Drawing.Color.DarkGray;
+            this.pnlMenuItem99.Controls.Add(this.picboxAbout);
+            this.pnlMenuItem99.Controls.Add(this.lblAbout);
+            this.pnlMenuItem99.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlMenuItem99.Location = new System.Drawing.Point(0, 459);
+            this.pnlMenuItem99.Name = "pnlMenuItem99";
+            this.pnlMenuItem99.Size = new System.Drawing.Size(196, 53);
+            this.pnlMenuItem99.TabIndex = 7;
+            this.pnlMenuItem99.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PnlMenuItem99_MouseClick);
+            this.pnlMenuItem99.MouseEnter += new System.EventHandler(this.PnlMenuItem99_MouseEnter);
+            this.pnlMenuItem99.MouseLeave += new System.EventHandler(this.PnlMenuItem99_MouseLeave);
             // 
-            // lblOptions
+            // picboxAbout
             // 
-            this.lblOptions.AutoSize = true;
-            this.lblOptions.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOptions.Location = new System.Drawing.Point(58, 15);
-            this.lblOptions.Name = "lblOptions";
-            this.lblOptions.Size = new System.Drawing.Size(56, 18);
-            this.lblOptions.TabIndex = 2;
-            this.lblOptions.Text = "Options";
-            this.lblOptions.Visible = false;
+            this.picboxAbout.Location = new System.Drawing.Point(9, 4);
+            this.picboxAbout.Name = "picboxAbout";
+            this.picboxAbout.Size = new System.Drawing.Size(45, 45);
+            this.picboxAbout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picboxAbout.TabIndex = 4;
+            this.picboxAbout.TabStop = false;
+            this.picboxAbout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicboxAbout_MouseClick);
+            this.picboxAbout.MouseEnter += new System.EventHandler(this.PicboxAbout_MouseEnter);
+            // 
+            // lblAbout
+            // 
+            this.lblAbout.AutoSize = true;
+            this.lblAbout.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbout.Location = new System.Drawing.Point(68, 17);
+            this.lblAbout.Name = "lblAbout";
+            this.lblAbout.Size = new System.Drawing.Size(45, 18);
+            this.lblAbout.TabIndex = 1;
+            this.lblAbout.Text = "About";
+            this.lblAbout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LblAbout_MouseClick);
+            this.lblAbout.MouseEnter += new System.EventHandler(this.LblAbout_MouseEnter);
+            // 
+            // pnlMenuItem4
+            // 
+            this.pnlMenuItem4.BackColor = System.Drawing.Color.DarkGray;
+            this.pnlMenuItem4.Controls.Add(this.picboxSwitchVaults);
+            this.pnlMenuItem4.Controls.Add(this.lblSwitchVaults);
+            this.pnlMenuItem4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlMenuItem4.Location = new System.Drawing.Point(0, 159);
+            this.pnlMenuItem4.Name = "pnlMenuItem4";
+            this.pnlMenuItem4.Size = new System.Drawing.Size(196, 53);
+            this.pnlMenuItem4.TabIndex = 6;
+            this.pnlMenuItem4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PnlMenuItem4_MouseClick);
+            this.pnlMenuItem4.MouseEnter += new System.EventHandler(this.PnlMenuItem4_MouseEnter);
+            this.pnlMenuItem4.MouseLeave += new System.EventHandler(this.PnlMenuItem4_MouseLeave);
+            // 
+            // picboxSwitchVaults
+            // 
+            this.picboxSwitchVaults.Location = new System.Drawing.Point(9, 4);
+            this.picboxSwitchVaults.Name = "picboxSwitchVaults";
+            this.picboxSwitchVaults.Size = new System.Drawing.Size(45, 45);
+            this.picboxSwitchVaults.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picboxSwitchVaults.TabIndex = 4;
+            this.picboxSwitchVaults.TabStop = false;
+            this.picboxSwitchVaults.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicboxSwitchVaults_MouseClick);
+            this.picboxSwitchVaults.MouseEnter += new System.EventHandler(this.PicboxSwitchVaults_MouseEnter);
+            // 
+            // lblSwitchVaults
+            // 
+            this.lblSwitchVaults.AutoSize = true;
+            this.lblSwitchVaults.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSwitchVaults.Location = new System.Drawing.Point(68, 17);
+            this.lblSwitchVaults.Name = "lblSwitchVaults";
+            this.lblSwitchVaults.Size = new System.Drawing.Size(87, 18);
+            this.lblSwitchVaults.TabIndex = 1;
+            this.lblSwitchVaults.Text = "Switch Vaults";
+            this.lblSwitchVaults.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LblSwitchVaults_MouseClick);
+            this.lblSwitchVaults.MouseEnter += new System.EventHandler(this.LblSwitchVaults_MouseEnter);
+            // 
+            // pnlMenuItem3
+            // 
+            this.pnlMenuItem3.BackColor = System.Drawing.Color.DarkGray;
+            this.pnlMenuItem3.Controls.Add(this.picboxEditEntry);
+            this.pnlMenuItem3.Controls.Add(this.lblEditEntry);
+            this.pnlMenuItem3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlMenuItem3.Location = new System.Drawing.Point(0, 106);
+            this.pnlMenuItem3.Name = "pnlMenuItem3";
+            this.pnlMenuItem3.Size = new System.Drawing.Size(196, 53);
+            this.pnlMenuItem3.TabIndex = 5;
+            this.pnlMenuItem3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PnlEditEntry_MouseClick);
+            this.pnlMenuItem3.MouseEnter += new System.EventHandler(this.PnlEditEntry_MouseEnter);
+            this.pnlMenuItem3.MouseLeave += new System.EventHandler(this.PnlEditEntry_MouseLeave);
+            // 
+            // picboxEditEntry
+            // 
+            this.picboxEditEntry.Location = new System.Drawing.Point(9, 4);
+            this.picboxEditEntry.Name = "picboxEditEntry";
+            this.picboxEditEntry.Size = new System.Drawing.Size(45, 45);
+            this.picboxEditEntry.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picboxEditEntry.TabIndex = 4;
+            this.picboxEditEntry.TabStop = false;
+            this.picboxEditEntry.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicboxEditEntry_MouseClick);
+            this.picboxEditEntry.MouseEnter += new System.EventHandler(this.PicboxEditEntry_MouseEnter);
+            // 
+            // lblEditEntry
+            // 
+            this.lblEditEntry.AutoSize = true;
+            this.lblEditEntry.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEditEntry.Location = new System.Drawing.Point(68, 17);
+            this.lblEditEntry.Name = "lblEditEntry";
+            this.lblEditEntry.Size = new System.Drawing.Size(66, 18);
+            this.lblEditEntry.TabIndex = 1;
+            this.lblEditEntry.Text = "Edit Entry";
+            this.lblEditEntry.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LblEditEntry_MouseClick);
+            this.lblEditEntry.MouseEnter += new System.EventHandler(this.LblEditEntry_MouseEnter);
             // 
             // pnlMenuItem2
             // 
@@ -181,7 +297,7 @@
             // 
             // picboxAddNewPassword
             // 
-            this.picboxAddNewPassword.Location = new System.Drawing.Point(3, 4);
+            this.picboxAddNewPassword.Location = new System.Drawing.Point(9, 4);
             this.picboxAddNewPassword.Name = "picboxAddNewPassword";
             this.picboxAddNewPassword.Size = new System.Drawing.Size(45, 45);
             this.picboxAddNewPassword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -194,7 +310,7 @@
             // 
             this.lblAddNewService.AutoSize = true;
             this.lblAddNewService.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAddNewService.Location = new System.Drawing.Point(62, 17);
+            this.lblAddNewService.Location = new System.Drawing.Point(68, 17);
             this.lblAddNewService.Name = "lblAddNewService";
             this.lblAddNewService.Size = new System.Drawing.Size(103, 18);
             this.lblAddNewService.TabIndex = 1;
@@ -218,7 +334,7 @@
             // 
             // picboxPasswordVault
             // 
-            this.picboxPasswordVault.Location = new System.Drawing.Point(3, 4);
+            this.picboxPasswordVault.Location = new System.Drawing.Point(9, 4);
             this.picboxPasswordVault.Name = "picboxPasswordVault";
             this.picboxPasswordVault.Size = new System.Drawing.Size(45, 45);
             this.picboxPasswordVault.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -231,7 +347,7 @@
             // 
             this.lblVault.AutoSize = true;
             this.lblVault.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVault.Location = new System.Drawing.Point(62, 17);
+            this.lblVault.Location = new System.Drawing.Point(68, 17);
             this.lblVault.Name = "lblVault";
             this.lblVault.Size = new System.Drawing.Size(100, 18);
             this.lblVault.TabIndex = 0;
@@ -241,7 +357,7 @@
             // 
             // pnlPasswordVault
             // 
-            this.pnlPasswordVault.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlPasswordVault.Controls.Add(this.pnlResize);
             this.pnlPasswordVault.Controls.Add(this.grpbxPasswordRetrieval);
             this.pnlPasswordVault.Controls.Add(this.txtboxServiceName);
             this.pnlPasswordVault.Controls.Add(this.lblSearch);
@@ -250,8 +366,16 @@
             this.pnlPasswordVault.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlPasswordVault.Location = new System.Drawing.Point(0, 0);
             this.pnlPasswordVault.Name = "pnlPasswordVault";
-            this.pnlPasswordVault.Size = new System.Drawing.Size(600, 512);
+            this.pnlPasswordVault.Size = new System.Drawing.Size(597, 512);
             this.pnlPasswordVault.TabIndex = 1;
+            // 
+            // pnlResize
+            // 
+            this.pnlResize.Location = new System.Drawing.Point(597, 509);
+            this.pnlResize.Name = "pnlResize";
+            this.pnlResize.Size = new System.Drawing.Size(3, 3);
+            this.pnlResize.TabIndex = 11;
+            this.pnlResize.Visible = false;
             // 
             // grpbxPasswordRetrieval
             // 
@@ -262,9 +386,9 @@
             this.grpbxPasswordRetrieval.Controls.Add(this.txtboxPasswordRetrieval);
             this.grpbxPasswordRetrieval.Controls.Add(this.pnlUnderPasswordRetrieval);
             this.grpbxPasswordRetrieval.Controls.Add(this.btnRetrievePassword);
-            this.grpbxPasswordRetrieval.Location = new System.Drawing.Point(3, 381);
+            this.grpbxPasswordRetrieval.Location = new System.Drawing.Point(3, 383);
             this.grpbxPasswordRetrieval.Name = "grpbxPasswordRetrieval";
-            this.grpbxPasswordRetrieval.Size = new System.Drawing.Size(591, 125);
+            this.grpbxPasswordRetrieval.Size = new System.Drawing.Size(586, 125);
             this.grpbxPasswordRetrieval.TabIndex = 10;
             this.grpbxPasswordRetrieval.TabStop = false;
             this.grpbxPasswordRetrieval.Text = "Password Retrieval";
@@ -281,11 +405,11 @@
             // btnDisposePassword
             // 
             this.btnDisposePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDisposePassword.Location = new System.Drawing.Point(450, 80);
+            this.btnDisposePassword.Location = new System.Drawing.Point(423, 84);
             this.btnDisposePassword.Name = "btnDisposePassword";
-            this.btnDisposePassword.Size = new System.Drawing.Size(133, 29);
+            this.btnDisposePassword.Size = new System.Drawing.Size(155, 29);
             this.btnDisposePassword.TabIndex = 9;
-            this.btnDisposePassword.Text = "Dispose of Password";
+            this.btnDisposePassword.Text = "Dispose of Password Field";
             this.btnDisposePassword.UseVisualStyleBackColor = true;
             this.btnDisposePassword.Click += new System.EventHandler(this.BtnDisposePassword_Click);
             // 
@@ -299,7 +423,7 @@
             this.txtboxPasswordRetrieval.Location = new System.Drawing.Point(9, 48);
             this.txtboxPasswordRetrieval.Name = "txtboxPasswordRetrieval";
             this.txtboxPasswordRetrieval.ReadOnly = true;
-            this.txtboxPasswordRetrieval.Size = new System.Drawing.Size(574, 24);
+            this.txtboxPasswordRetrieval.Size = new System.Drawing.Size(569, 24);
             this.txtboxPasswordRetrieval.TabIndex = 5;
             // 
             // pnlUnderPasswordRetrieval
@@ -309,12 +433,12 @@
             this.pnlUnderPasswordRetrieval.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.pnlUnderPasswordRetrieval.Location = new System.Drawing.Point(9, 72);
             this.pnlUnderPasswordRetrieval.Name = "pnlUnderPasswordRetrieval";
-            this.pnlUnderPasswordRetrieval.Size = new System.Drawing.Size(574, 2);
+            this.pnlUnderPasswordRetrieval.Size = new System.Drawing.Size(569, 2);
             this.pnlUnderPasswordRetrieval.TabIndex = 6;
             // 
             // btnRetrievePassword
             // 
-            this.btnRetrievePassword.Location = new System.Drawing.Point(9, 80);
+            this.btnRetrievePassword.Location = new System.Drawing.Point(9, 84);
             this.btnRetrievePassword.Name = "btnRetrievePassword";
             this.btnRetrievePassword.Size = new System.Drawing.Size(217, 29);
             this.btnRetrievePassword.TabIndex = 7;
@@ -331,7 +455,7 @@
             this.txtboxServiceName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtboxServiceName.Location = new System.Drawing.Point(6, 29);
             this.txtboxServiceName.Name = "txtboxServiceName";
-            this.txtboxServiceName.Size = new System.Drawing.Size(588, 22);
+            this.txtboxServiceName.Size = new System.Drawing.Size(583, 22);
             this.txtboxServiceName.TabIndex = 4;
             this.txtboxServiceName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtboxServiceName_KeyPress);
             // 
@@ -341,9 +465,9 @@
             this.lblSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSearch.Location = new System.Drawing.Point(2, 6);
             this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(156, 20);
+            this.lblSearch.Size = new System.Drawing.Size(173, 20);
             this.lblSearch.TabIndex = 2;
-            this.lblSearch.Text = "Search for a Service:";
+            this.lblSearch.Text = "Search for a Password:";
             // 
             // pnlUnderSearchbar
             // 
@@ -352,7 +476,7 @@
             this.pnlUnderSearchbar.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.pnlUnderSearchbar.Location = new System.Drawing.Point(6, 51);
             this.pnlUnderSearchbar.Name = "pnlUnderSearchbar";
-            this.pnlUnderSearchbar.Size = new System.Drawing.Size(588, 1);
+            this.pnlUnderSearchbar.Size = new System.Drawing.Size(583, 1);
             this.pnlUnderSearchbar.TabIndex = 1;
             // 
             // dgvPasswordVault
@@ -373,7 +497,7 @@
             this.dgvPasswordVault.Name = "dgvPasswordVault";
             this.dgvPasswordVault.ReadOnly = true;
             this.dgvPasswordVault.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPasswordVault.Size = new System.Drawing.Size(588, 317);
+            this.dgvPasswordVault.Size = new System.Drawing.Size(583, 319);
             this.dgvPasswordVault.TabIndex = 0;
             // 
             // clmnName
@@ -382,7 +506,6 @@
             this.clmnName.HeaderText = "Service Name";
             this.clmnName.Name = "clmnName";
             this.clmnName.ReadOnly = true;
-            this.clmnName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.clmnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             // 
             // clmnUsername
@@ -391,7 +514,6 @@
             this.clmnUsername.HeaderText = "Username";
             this.clmnUsername.Name = "clmnUsername";
             this.clmnUsername.ReadOnly = true;
-            this.clmnUsername.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.clmnUsername.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             // 
             // clmnEmail
@@ -400,68 +522,49 @@
             this.clmnEmail.HeaderText = "Email Address";
             this.clmnEmail.Name = "clmnEmail";
             this.clmnEmail.ReadOnly = true;
-            this.clmnEmail.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.clmnEmail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             // 
-            // pnlMenuItem3
+            // pnlDivider
             // 
-            this.pnlMenuItem3.BackColor = System.Drawing.Color.DarkGray;
-            this.pnlMenuItem3.Controls.Add(this.picboxEditEntry);
-            this.pnlMenuItem3.Controls.Add(this.lblEditEntry);
-            this.pnlMenuItem3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlMenuItem3.Location = new System.Drawing.Point(0, 106);
-            this.pnlMenuItem3.Name = "pnlMenuItem3";
-            this.pnlMenuItem3.Size = new System.Drawing.Size(196, 53);
-            this.pnlMenuItem3.TabIndex = 5;
-            this.pnlMenuItem3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PnlEditEntry_MouseClick);
-            this.pnlMenuItem3.MouseEnter += new System.EventHandler(this.PnlEditEntry_MouseEnter);
-            this.pnlMenuItem3.MouseLeave += new System.EventHandler(this.PnlEditEntry_MouseLeave);
-            // 
-            // picboxEditEntry
-            // 
-            this.picboxEditEntry.Location = new System.Drawing.Point(3, 4);
-            this.picboxEditEntry.Name = "picboxEditEntry";
-            this.picboxEditEntry.Size = new System.Drawing.Size(45, 45);
-            this.picboxEditEntry.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picboxEditEntry.TabIndex = 4;
-            this.picboxEditEntry.TabStop = false;
-            this.picboxEditEntry.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicboxEditEntry_MouseClick);
-            this.picboxEditEntry.MouseEnter += new System.EventHandler(this.PicboxEditEntry_MouseEnter);
-            // 
-            // lblEditEntry
-            // 
-            this.lblEditEntry.AutoSize = true;
-            this.lblEditEntry.Font = new System.Drawing.Font("Open Sans", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEditEntry.Location = new System.Drawing.Point(62, 17);
-            this.lblEditEntry.Name = "lblEditEntry";
-            this.lblEditEntry.Size = new System.Drawing.Size(66, 18);
-            this.lblEditEntry.TabIndex = 1;
-            this.lblEditEntry.Text = "Edit Entry";
-            this.lblEditEntry.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LblEditEntry_MouseClick);
-            this.lblEditEntry.MouseEnter += new System.EventHandler(this.LblEditEntry_MouseEnter);
+            this.pnlDivider.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlDivider.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.pnlDivider.Location = new System.Drawing.Point(10, 65);
+            this.pnlDivider.Name = "pnlDivider";
+            this.pnlDivider.Size = new System.Drawing.Size(780, 1);
+            this.pnlDivider.TabIndex = 6;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(800, 578);
+            this.ClientSize = new System.Drawing.Size(800, 585);
+            this.Controls.Add(this.pnlDivider);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.pnlDragbar);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MinimumSize = new System.Drawing.Size(582, 386);
+            this.MinimumSize = new System.Drawing.Size(682, 413);
             this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YourPass";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.pnlDragbar.ResumeLayout(false);
-            this.pnlDragbar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxWindowIcon)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.pnlOptions.ResumeLayout(false);
-            this.pnlOptions.PerformLayout();
+            this.pnlMenuItem99.ResumeLayout(false);
+            this.pnlMenuItem99.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxAbout)).EndInit();
+            this.pnlMenuItem4.ResumeLayout(false);
+            this.pnlMenuItem4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxSwitchVaults)).EndInit();
+            this.pnlMenuItem3.ResumeLayout(false);
+            this.pnlMenuItem3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxEditEntry)).EndInit();
             this.pnlMenuItem2.ResumeLayout(false);
             this.pnlMenuItem2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxAddNewPassword)).EndInit();
@@ -473,9 +576,6 @@
             this.grpbxPasswordRetrieval.ResumeLayout(false);
             this.grpbxPasswordRetrieval.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswordVault)).EndInit();
-            this.pnlMenuItem3.ResumeLayout(false);
-            this.pnlMenuItem3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picboxEditEntry)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -487,8 +587,6 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel pnlDragbar;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel pnlOptions;
-        private System.Windows.Forms.Label lblOptions;
         private System.Windows.Forms.Panel pnlMenuItem2;
         private System.Windows.Forms.Label lblAddNewService;
         private System.Windows.Forms.Panel pnlMenuItem1;
@@ -506,12 +604,21 @@
         private System.Windows.Forms.TextBox txtboxPasswordRetrieval;
         private System.Windows.Forms.Panel pnlUnderPasswordRetrieval;
         private System.Windows.Forms.Button btnRetrievePassword;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmnName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmnUsername;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clmnEmail;
         private System.Windows.Forms.Panel pnlMenuItem3;
         private System.Windows.Forms.PictureBox picboxEditEntry;
         private System.Windows.Forms.Label lblEditEntry;
+        private System.Windows.Forms.Panel pnlResize;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmnUsername;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmnEmail;
+        private System.Windows.Forms.PictureBox picboxWindowIcon;
+        private System.Windows.Forms.Panel pnlMenuItem99;
+        private System.Windows.Forms.PictureBox picboxAbout;
+        private System.Windows.Forms.Label lblAbout;
+        private System.Windows.Forms.Panel pnlMenuItem4;
+        private System.Windows.Forms.PictureBox picboxSwitchVaults;
+        private System.Windows.Forms.Label lblSwitchVaults;
+        private System.Windows.Forms.Panel pnlDivider;
     }
 }
 

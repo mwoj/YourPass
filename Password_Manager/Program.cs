@@ -17,6 +17,7 @@ namespace Password_Manager
         public static readonly int WM_NCLBUTTONDOWN = 0xA1;
         public static readonly int HT_CAPTION = 0x2;
         public static readonly int WM_LBUTTONDOWN = 0x0201;
+        public static readonly int CS_DROPSHADOW = 0x20000;
 
         /// <summary>
         /// The main entry point for the application.

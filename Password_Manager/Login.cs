@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -33,6 +34,10 @@ namespace Password_Manager
 
             Application.AddMessageFilter(this);
 
+            Bitmap mainIcon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("Password_Manager.key-icon.png"));
+
+            picboxIcon.Image = mainIcon;
+            picboxIcon.Update();
 
             if (!Directory.Exists(PASSWORD_VAULT_DIRECTORY))
                 Directory.CreateDirectory(PASSWORD_VAULT_DIRECTORY);
@@ -76,8 +81,7 @@ namespace Password_Manager
             if (selectedItem == "<New Password List>")
             {
                 menuPasswordDB.SelectedIndex = -1;
-                Hide();
-                new CreateNewPasswordList(this).Show();
+                new CreateNewPasswordList(this).ShowDialog();
             }
             else
             {
@@ -98,10 +102,16 @@ namespace Password_Manager
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
+            if (txtboxMasterPass.Text.Length < 12)
+            {
+                MessageBox.Show("Password was denied... Try again.", Program.GetCaptionTitle("Failure"), MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                return;
+            }
+                
             string ciphertext;
             using (IDbConnection conn = new SQLiteConnection(Program.CurrentConnectionString))
                 ciphertext = conn.ExecuteScalar("SELECT encrypted_password FROM PasswordVault WHERE id = 1 AND service_name = 'checksum';") as string;
-
+            
             string plaintext = Crypto.SimpleDecryptWithPassword(ciphertext, txtboxMasterPass.Text);
 
             if (plaintext == "correct_password")
@@ -122,26 +132,17 @@ namespace Password_Manager
                 GC.WaitForPendingFinalizers();
 
                 // Show the new password vault form
-                new Form1(ssmp).Show();
+                string cleanFileName = menuPasswordDB.SelectedItem as string;
+                cleanFileName = cleanFileName.Substring(0, cleanFileName.IndexOf("."));
+                new Form1(this, cleanFileName, ssmp).Show();
             }
             else
             {
-                MessageBox.Show("Password was denied... Try again.", "YourPass - Failure.", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                MessageBox.Show("Password was denied... Try again.", Program.GetCaptionTitle("Failure"), MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
             }
         }
 
-        private void TxtboxMasterPass_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-                btnLogin.PerformClick();
-        }
-
-        private void Login_Shown(object sender, EventArgs e)
-        {
-            ShowFormHook();
-        }
-
-        private void ShowFormHook()
+        public void ShowFormHook()
         {
             // If there is a database found, change control focus to txtboxMasterPass
             if (passwordVaults.Count > 1)
@@ -151,6 +152,16 @@ namespace Password_Manager
             }
             // If there is no database found, change control focus to menuPasswordDB
             else menuPasswordDB.Select();
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= Program.CS_DROPSHADOW;
+                return cp;
+            }
         }
     }
 }

@@ -43,9 +43,12 @@
             this.tmrReveal = new System.Windows.Forms.Timer(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.picboxIcon = new System.Windows.Forms.PictureBox();
+            this.pnlDivider = new System.Windows.Forms.Panel();
             this.pnlDragbar.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlDragbar
@@ -53,6 +56,7 @@
             this.pnlDragbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDragbar.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlDragbar.Controls.Add(this.picboxIcon);
             this.pnlDragbar.Controls.Add(this.lblTitle);
             this.pnlDragbar.Controls.Add(this.btnExit);
             this.pnlDragbar.Location = new System.Drawing.Point(0, 0);
@@ -63,10 +67,10 @@
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Myanmar Text", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(8, 11);
+            this.lblTitle.Font = new System.Drawing.Font("Myanmar Text", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(46, 14);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(402, 34);
+            this.lblTitle.Size = new System.Drawing.Size(361, 30);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "YourPass V1.0 - Create a New Password List";
             // 
@@ -89,7 +93,7 @@
             this.groupBox1.Controls.Add(this.pnlUnderPasswordName);
             this.groupBox1.Controls.Add(this.txtListName);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 53);
+            this.groupBox1.Location = new System.Drawing.Point(12, 59);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(463, 84);
             this.groupBox1.TabIndex = 1;
@@ -162,7 +166,7 @@
             // 
             this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreate.Location = new System.Drawing.Point(13, 245);
+            this.btnCreate.Location = new System.Drawing.Point(13, 248);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(462, 32);
             this.btnCreate.TabIndex = 3;
@@ -181,7 +185,7 @@
             this.groupBox2.Controls.Add(this.lblPassStrength);
             this.groupBox2.Controls.Add(this.chkboxReveal);
             this.groupBox2.Controls.Add(this.txtboxMasterPassword);
-            this.groupBox2.Location = new System.Drawing.Point(12, 156);
+            this.groupBox2.Location = new System.Drawing.Point(12, 162);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(463, 77);
             this.groupBox2.TabIndex = 3;
@@ -196,12 +200,31 @@
             this.panel2.Size = new System.Drawing.Size(448, 1);
             this.panel2.TabIndex = 6;
             // 
+            // picboxIcon
+            // 
+            this.picboxIcon.Location = new System.Drawing.Point(8, 8);
+            this.picboxIcon.Name = "picboxIcon";
+            this.picboxIcon.Size = new System.Drawing.Size(32, 32);
+            this.picboxIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picboxIcon.TabIndex = 2;
+            this.picboxIcon.TabStop = false;
+            // 
+            // pnlDivider
+            // 
+            this.pnlDivider.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.pnlDivider.Location = new System.Drawing.Point(5, 50);
+            this.pnlDivider.Name = "pnlDivider";
+            this.pnlDivider.Size = new System.Drawing.Size(478, 1);
+            this.pnlDivider.TabIndex = 4;
+            // 
             // CreateNewPasswordList
             // 
+            this.AcceptButton = this.btnCreate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(487, 293);
+            this.ClientSize = new System.Drawing.Size(487, 296);
             this.ControlBox = false;
+            this.Controls.Add(this.pnlDivider);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.groupBox1);
@@ -217,6 +240,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -237,5 +261,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Panel pnlUnderPasswordName;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.PictureBox picboxIcon;
+        private System.Windows.Forms.Panel pnlDivider;
     }
 }
