@@ -331,7 +331,7 @@ namespace Password_Manager
         {
             if (pnlMenuItem3.BackColor != menuItemSelected)
                 pnlMenuItem3.BackColor = menuItemSelected;
-            DeselectAllOtherItems(pnlMenuItem1);
+            DeselectAllOtherItems(pnlMenuItem3);
             menuItemIndex = 2;
 
             if (dgvPasswordVault.SelectedRows.Count != 1)
