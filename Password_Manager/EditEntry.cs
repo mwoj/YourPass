@@ -103,15 +103,28 @@ namespace Password_Manager
 
             using (IDbConnection conn = new SQLiteConnection(Program.CurrentConnectionString))
             {
+                int amountOfValidParameters = 0;
                 string sql = "UPDATE PasswordVault SET ";
                 if (new_service_name != null)
+                {
                     sql += "service_name = @new_service_name";
+                    amountOfValidParameters++;
+                }
                 if (new_email != null)
-                    sql += ", email = @email";
+                {
+                    sql += $"{(amountOfValidParameters > 0 ? ", " : "")} email = @email";
+                    amountOfValidParameters++;
+                }
                 if (new_username != null)
-                    sql += ", username = @username";
+                {
+                    sql += $"{(amountOfValidParameters > 0 ? ", " : "")} username = @username";
+                    amountOfValidParameters++;
+                }
                 if (new_password != null)
-                    sql += ", encrypted_password = @password";
+                {
+                    sql += $"{(amountOfValidParameters > 0 ? ", " : "")} encrypted_password = @password";
+                    amountOfValidParameters++;
+                }
                 sql += " WHERE service_name = @old_service_name;";
                 DynamicParameters dp = new DynamicParameters();
                 dp.Add("@new_service_name", new_service_name);
