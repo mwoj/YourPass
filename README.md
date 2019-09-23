@@ -1,5 +1,5 @@
 # YourPass
- Open Source Password Manager. Written in C# .NET, using Dapper, SQLite, and AES 256 Bit Encryption.
+ Open Source Password Manager. Written in C# .NET using Dapper, SQLite, and AES 256 Bit Encryption.
  
  
 ### Screenshots:
